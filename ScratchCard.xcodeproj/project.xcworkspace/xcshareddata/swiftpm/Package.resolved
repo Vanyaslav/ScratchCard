@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "combineext#sharereplay",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CombineCommunity/CombineExt#sharereplay",
+      "state" : {
+        "revision" : "d7b896fa9ca8b47fa7bcde6b43ef9b70bf8c1f56",
+        "version" : "1.8.1"
+      }
+    },
+    {
+      "identity" : "resolver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hmlongco/Resolver",
+      "state" : {
+        "branch" : "master",
+        "revision" : "c1c5ce3f7b567d3f813ca341087658cf13795918"
+      }
+    }
+  ],
+  "version" : 2
+}

@@ -6,12 +6,32 @@
 //
 
 import SwiftUI
+import Resolver
 
 @main
 struct ScratchCardApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppRouter()
+                .mainView()
         }
+    }
+}
+
+extension Resolver: ResolverRegistering {
+    public static func registerAllServices() {
+        register { AppStateStore(service: .init()) }.scope(.shared)
+    }
+}
+
+class AppRouter {
+    init() {
+        Resolver.registerAllServices()
+    }
+}
+
+extension AppRouter {
+    func mainView() -> some View {
+        MainView()
     }
 }
