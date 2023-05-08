@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import CombineExt
+import UserNotifications
 
 enum State: String {
     case unscratched, scratched, activated
@@ -30,7 +31,17 @@ enum State: String {
     }
 }
 
-final class AppStateStore: ObservableObject {
+extension AppStateStore: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        [.banner, .badge, .sound]
+    }
+}
+
+final class AppStateStore: NSObject, ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     // in
     let shouldGenerateCode = PassthroughSubject<Void, Never>()
@@ -39,7 +50,6 @@ final class AppStateStore: ObservableObject {
     let shouldActivate = PassthroughSubject<Void, Never>()
     // out
     @Published private(set) var stateTitle: String
-    // dummy
     @Published private(set) var showError: String?
     @Published private(set) var isActivationEnabled: Bool = false
     @Published private(set) var isScratchEnabled: Bool = true
@@ -55,6 +65,21 @@ final class AppStateStore: ObservableObject {
     ) {
         self.stateTitle = stateTitle
         self.generatedCode = initialCode
+        super.init()
+        
+        UNUserNotificationCenter
+            .current()
+            .requestAuthorization(options: [.alert, .badge, .sound])
+        { success, error in
+            if success {
+                debugPrint("Local notifications granted!")
+            } else if let error = error {
+                debugPrint(error.localizedDescription)
+            }
+        }
+        
+        UNUserNotificationCenter
+            .current().delegate = self
         
         let result = shouldActivate
             .withLatestFrom($generatedCode)
@@ -65,9 +90,14 @@ final class AppStateStore: ObservableObject {
         
         result.values()
             .compactMap { $0.ios }
-            .filter { Decimal(string: $0) ?? 0 > 6.1  }
-            .map {_ in State.activated.title }
-            .assign(to: &$stateTitle)
+            .sink { [weak self] in
+                if Decimal(string: $0) ?? 0 > 6.1 {
+                    self?.stateTitle = State.activated.title
+                } else {
+                    self?.showError = "Activation was not successful!"
+                }
+            }
+            .store(in: &cancellables)
         
         result.failures()
             .map { $0.localizedDescription }
@@ -95,5 +125,17 @@ final class AppStateStore: ObservableObject {
         cancelGenerateCode
             .sink { [weak self] _ in self?.generateCodeAction?.cancel() }
             .store(in: &cancellables)
+        
+        $showError
+            .compactMap { $0 }
+            .sink {
+                let content = UNMutableNotificationContent()
+                content.title = "Activation failed!"
+                content.subtitle = $0
+                content.sound = UNNotificationSound.defaultCritical
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                UNUserNotificationCenter.current().add(request)
+            }.store(in: &cancellables)
     }
 }
