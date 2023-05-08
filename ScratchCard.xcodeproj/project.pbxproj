@@ -91,9 +91,9 @@
 			children = (
 				A19D80942A06EA9A00AE46A5 /* ScratchCardApp.swift */,
 				A19D80C32A06EF7600AE46A5 /* AppStateStore.swift */,
+				A19D80C12A06EEF900AE46A5 /* Scenes */,
 				A19D80C52A06F63D00AE46A5 /* Service */,
 				A19D80BE2A06EE9400AE46A5 /* Extentions */,
-				A19D80C12A06EEF900AE46A5 /* Scenes */,
 				A19D80C22A06EF1C00AE46A5 /* Resourses */,
 				A19D809A2A06EA9D00AE46A5 /* Preview Content */,
 			);

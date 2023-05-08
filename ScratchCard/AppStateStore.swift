@@ -30,10 +30,6 @@ enum State: String {
     }
 }
 
-struct VersionResponse: Decodable {
-    let ios: String?
-}
-
 final class AppStateStore: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     // in

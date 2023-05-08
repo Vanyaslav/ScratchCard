@@ -8,6 +8,10 @@
 import Foundation
 import Combine
 
+struct VersionResponse: Decodable {
+    let ios: String?
+}
+
 class URLError: Error {}
 
 protocol DataServiceProtocol {
