@@ -20,11 +20,11 @@ struct ScratchCardApp: App {
 
 extension Resolver: ResolverRegistering {
     public static func registerAllServices() {
-        register { AppStateStore(service: .init()) }.scope(.shared)
+        register { AppStateStore(service: DataService()) }.scope(.shared)
     }
 }
 
-class AppRouter {
+final class AppRouter {
     init() {
         Resolver.registerAllServices()
     }

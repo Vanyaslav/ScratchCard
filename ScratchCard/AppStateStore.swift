@@ -34,7 +34,7 @@ struct VersionResponse: Decodable {
     let ios: String?
 }
 
-class AppStateStore: ObservableObject {
+final class AppStateStore: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     // in
     let shouldGenerateCode = PassthroughSubject<Void, Never>()
@@ -43,19 +43,22 @@ class AppStateStore: ObservableObject {
     let shouldActivate = PassthroughSubject<Void, Never>()
     // out
     @Published private(set) var stateTitle: String
+    // dummy
     @Published private(set) var showError: String?
     @Published private(set) var isActivationEnabled: Bool = false
     @Published private(set) var isScratchEnabled: Bool = true
     
-    @Published private var generatedCode: String?
+    @Published private(set) var generatedCode: String?
     
     private var generateCodeAction: Cancellable?
     
     init(
         stateTitle: String = State.initial.title,
-        service: DataService
+        service: DataServiceProtocol,
+        initialCode: String? = nil
     ) {
         self.stateTitle = stateTitle
+        self.generatedCode = initialCode
         
         let result = shouldActivate
             .withLatestFrom($generatedCode)
@@ -74,16 +77,17 @@ class AppStateStore: ObservableObject {
             .map { $0.localizedDescription }
             .assign(to: &$showError)
         
-        subscribeGenerateCode.sink { [weak self] in
-            guard let self else { return }
-            self.generateCodeAction = self.shouldGenerateCode
-                .delay(for: 2, scheduler: RunLoop.current)
-                .sink {
-                    self.generatedCode = UUID().uuidString
-                    self.stateTitle = State.scratched.title
-                    self.isScratchEnabled = false
-                }
-        }.store(in: &cancellables)
+        subscribeGenerateCode
+            .sink { [weak self] in
+                guard let self else { return }
+                self.generateCodeAction = self.shouldGenerateCode
+                    .delay(for: 2, scheduler: RunLoop.current)
+                    .sink {
+                        self.generatedCode = UUID().uuidString
+                        self.stateTitle = State.scratched.title
+                        self.isScratchEnabled = false
+                    }
+            }.store(in: &cancellables)
         
         $generatedCode
             .compactMap { $0 }

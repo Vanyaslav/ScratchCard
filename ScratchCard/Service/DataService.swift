@@ -8,13 +8,21 @@
 import Foundation
 import Combine
 
+class URLError: Error {}
+
 protocol DataServiceProtocol {
     func activate(with id: String) -> AnyPublisher<VersionResponse, Error>
 }
 
-class URLError: Error {}
-
-class DataService: DataServiceProtocol {
+final class DataService: DataServiceProtocol {
+    private let urlSession: URLSession
+    
+    init() {
+        let configuration = URLSessionConfiguration.default
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        urlSession = URLSession(configuration: configuration)
+    }
+    
     func activate(with id: String) -> AnyPublisher<VersionResponse, Error> {
         let queryItems = [URLQueryItem(name: "code", value: id)]
         var urlComponents = URLComponents(string: "https://api.o2.sk/version")
@@ -23,7 +31,7 @@ class DataService: DataServiceProtocol {
             return Fail(error: URLError())
                 .eraseToAnyPublisher()
         }
-        return URLSession.shared
+        return urlSession
             .dataTaskPublisher(for: url)
             .receive(on: DispatchQueue.main)
             .tryMap { $0.data }

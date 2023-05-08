@@ -7,30 +7,80 @@
 
 import XCTest
 @testable import ScratchCard
+import Combine
 
-final class ScratchCardTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+final class ScratchCardTests: XCTestCase {    
+    func testCancelScratching() throws {
+        let sut = AppStateStore(service: MockPositiveActivationService(), initialCode: "hdghsghshsgs")
+        sut.shouldGenerateCode.send()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+            XCTAssertEqual(sut.stateTitle, "Unscratched")
+            sut.cancelGenerateCode.send()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            XCTAssertEqual(sut.stateTitle, "Unscratched")
         }
     }
 
+    func testScraichingAndActivationFailure() throws {
+        let sut = AppStateStore(service: MockActivationFailedService())
+        sut.shouldGenerateCode.send()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+            XCTAssertEqual(sut.stateTitle, "Unscratched")
+            XCTAssert(sut.generatedCode == nil)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.1) {
+            XCTAssertEqual(sut.stateTitle, "Scratched")
+            XCTAssert(sut.generatedCode != nil)
+            sut.shouldActivate.send()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
+            XCTAssertEqual(sut.stateTitle, "Scratched")
+            XCTAssertEqual(sut.showError, "The operation couldn’t be completed. (test error 111.)")
+        }
+    }
+    
+    func testActivationPositive() throws {
+        let sut = AppStateStore(service: MockPositiveActivationService(), initialCode: "hdghsghshsgs")
+        sut.shouldActivate.send()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            XCTAssertEqual(sut.stateTitle, "Activated")
+            XCTAssertEqual(sut.showError, nil)
+        }
+    }
+    
+    func testActivationNegative() throws {
+        let sut = AppStateStore(service: MockNegativeActivationService(), initialCode: "hdghsghshsgs")
+        sut.shouldActivate.send()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            XCTAssertEqual(sut.stateTitle, "Unscratched")
+            XCTAssertEqual(sut.showError, nil)
+        }
+    }
+}
+
+class MockPositiveActivationService: DataServiceProtocol {
+    func activate(with id: String) -> AnyPublisher<VersionResponse, Error> {
+        Just(VersionResponse(ios: "6.1"))
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+}
+
+class MockNegativeActivationService: DataServiceProtocol {
+    func activate(with id: String) -> AnyPublisher<VersionResponse, Error> {
+        Just(VersionResponse(ios: "6.0999"))
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+}
+
+class MockActivationFailedService: DataServiceProtocol {
+    func activate(with id: String) -> AnyPublisher<VersionResponse, Error> {
+        Fail(error: NSError(domain: "test", code: 111) as Error)
+            .eraseToAnyPublisher()
+    }
 }
