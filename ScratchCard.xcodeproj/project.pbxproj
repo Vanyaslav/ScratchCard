@@ -19,6 +19,8 @@
 		A19D80CA2A07020E00AE46A5 /* CombineExt in Frameworks */ = {isa = PBXBuildFile; productRef = A19D80C92A07020E00AE46A5 /* CombineExt */; };
 		A19D80CC2A0704F700AE46A5 /* ActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80CB2A0704F700AE46A5 /* ActivationView.swift */; };
 		A1ABD5A22A07EC8D00CD96F4 /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD5A12A07EC8D00CD96F4 /* View+Ext.swift */; };
+		A1ABD5A42A0ADB1000CD96F4 /* UNUserNotificationCenter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD5A32A0ADB0F00CD96F4 /* UNUserNotificationCenter+Ext.swift */; };
+		A1ABD5A62A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */; };
 		A1F007372A07CF47006BC5E7 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = A1F007362A07CF47006BC5E7 /* Resolver */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +48,8 @@
 		A19D80C62A06F65400AE46A5 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		A19D80CB2A0704F700AE46A5 /* ActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationView.swift; sourceTree = "<group>"; };
 		A1ABD5A12A07EC8D00CD96F4 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
+		A1ABD5A32A0ADB0F00CD96F4 /* UNUserNotificationCenter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Ext.swift"; sourceTree = "<group>"; };
+		A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStateStore+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,7 @@
 			children = (
 				A19D80942A06EA9A00AE46A5 /* ScratchCardApp.swift */,
 				A19D80C32A06EF7600AE46A5 /* AppStateStore.swift */,
+				A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */,
 				A19D80C12A06EEF900AE46A5 /* Scenes */,
 				A19D80C52A06F63D00AE46A5 /* Service */,
 				A19D80BE2A06EE9400AE46A5 /* Extentions */,
@@ -121,6 +126,7 @@
 			children = (
 				A19D80BF2A06EEB200AE46A5 /* Text+Format.swift */,
 				A1ABD5A12A07EC8D00CD96F4 /* View+Ext.swift */,
+				A1ABD5A32A0ADB0F00CD96F4 /* UNUserNotificationCenter+Ext.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -265,7 +271,9 @@
 				A19D80972A06EA9A00AE46A5 /* MainView.swift in Sources */,
 				A19D80C42A06EF7600AE46A5 /* AppStateStore.swift in Sources */,
 				A19D80C02A06EEB200AE46A5 /* Text+Format.swift in Sources */,
+				A1ABD5A62A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift in Sources */,
 				A19D80952A06EA9A00AE46A5 /* ScratchCardApp.swift in Sources */,
+				A1ABD5A42A0ADB1000CD96F4 /* UNUserNotificationCenter+Ext.swift in Sources */,
 				A19D80C72A06F65400AE46A5 /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

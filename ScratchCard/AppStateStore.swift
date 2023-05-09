@@ -31,16 +31,6 @@ enum State: String {
     }
 }
 
-extension AppStateStore: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
-        [.banner, .badge, .sound]
-    }
-}
-
 final class AppStateStore: NSObject, ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     // in
@@ -67,19 +57,7 @@ final class AppStateStore: NSObject, ObservableObject {
         self.generatedCode = initialCode
         super.init()
         
-        UNUserNotificationCenter
-            .current()
-            .requestAuthorization(options: [.alert, .badge, .sound])
-        { success, error in
-            if success {
-                debugPrint("Local notifications granted!")
-            } else if let error = error {
-                debugPrint(error.localizedDescription)
-            }
-        }
-        
-        UNUserNotificationCenter
-            .current().delegate = self
+        UNUserNotificationCenter.requestAndDelegate(object: self)
         
         let result = shouldActivate
             .withLatestFrom($generatedCode)
@@ -129,13 +107,8 @@ final class AppStateStore: NSObject, ObservableObject {
         $showError
             .compactMap { $0 }
             .sink {
-                let content = UNMutableNotificationContent()
-                content.title = "Activation failed!"
-                content.subtitle = $0
-                content.sound = UNNotificationSound.defaultCritical
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                UNUserNotificationCenter.current().add(request)
-            }.store(in: &cancellables)
+                UNUserNotificationCenter
+                    .sendNotification(title: $0, interval: 1) }
+            .store(in: &cancellables)
     }
 }

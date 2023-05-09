@@ -12,10 +12,12 @@ struct VersionResponse: Decodable {
     let ios: String?
 }
 
-class URLError: Error {}
+enum Error: Swift.Error {
+    case URL
+}
 
 protocol DataServiceProtocol {
-    func activate(with id: String) -> AnyPublisher<VersionResponse, Error>
+    func activate(with id: String) -> AnyPublisher<VersionResponse, Swift.Error>
 }
 
 final class DataService: DataServiceProtocol {
@@ -27,12 +29,12 @@ final class DataService: DataServiceProtocol {
         urlSession = URLSession(configuration: configuration)
     }
     
-    func activate(with id: String) -> AnyPublisher<VersionResponse, Error> {
+    func activate(with id: String) -> AnyPublisher<VersionResponse, Swift.Error> {
         let queryItems = [URLQueryItem(name: "code", value: id)]
         var urlComponents = URLComponents(string: "https://api.o2.sk/version")
         urlComponents?.queryItems = queryItems
         guard let url = urlComponents?.url else {
-            return Fail(error: URLError())
+            return Fail(error: Error.URL)
                 .eraseToAnyPublisher()
         }
         return urlSession

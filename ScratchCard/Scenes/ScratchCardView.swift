@@ -17,7 +17,7 @@ struct ScratchCardView: View {
             Button { store.shouldGenerateCode.send() } label: {
                 Text("Scratch the card")
                     .formatButtonText()
-            }
+            }.enabled(store.isScratchEnabled)
         }
         .padding()
         .onAppear() {
@@ -26,7 +26,6 @@ struct ScratchCardView: View {
         .onDisappear() {
             store.cancelGenerateCode.send()
         }
-        .enabled(store.isScratchEnabled)
     }
 }
 
