@@ -12,16 +12,18 @@ import Combine
 final class ScratchCardTests: XCTestCase {    
     func testCancelScratching() throws {
         let expectation = expectation(description: "Cancel scratching")
-        let sut = AppStateStore(service: MockPositiveActivationService(), initialCode: "hdghsghshsgs")
+        let sut = AppStateStore(service: MockPositiveActivationService())
         sut.subscribeGenerateCode.send()
         sut.shouldGenerateCode.send()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
             XCTAssertEqual(sut.stateTitle, "Unscratched")
+            XCTAssert(sut.generatedCode == nil)
             sut.cancelGenerateCode.send()
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             XCTAssertEqual(sut.stateTitle, "Unscratched")
+            XCTAssert(sut.generatedCode == nil)
             expectation.fulfill()
         }
                                       
