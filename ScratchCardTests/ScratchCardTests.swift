@@ -81,24 +81,24 @@ final class ScratchCardTests: XCTestCase {
 }
 
 class MockPositiveActivationService: DataServiceProtocol {
-    func activate(with id: String) -> AnyPublisher<VersionResponse, Error> {
+    func activate(with id: String) -> AnyPublisher<VersionResponse, Swift.Error> {
         Just(VersionResponse(ios: "6.11"))
-            .setFailureType(to: Error.self)
+            .setFailureType(to: Swift.Error.self)
             .eraseToAnyPublisher()
     }
 }
 
 class MockNegativeActivationService: DataServiceProtocol {
-    func activate(with id: String) -> AnyPublisher<VersionResponse, Error> {
+    func activate(with id: String) -> AnyPublisher<VersionResponse, Swift.Error> {
         Just(VersionResponse(ios: "6.0999"))
-            .setFailureType(to: Error.self)
+            .setFailureType(to: Swift.Error.self)
             .eraseToAnyPublisher()
     }
 }
 
 class MockActivationFailedService: DataServiceProtocol {
-    func activate(with id: String) -> AnyPublisher<VersionResponse, Error> {
-        Fail(error: NSError(domain: "test", code: 111) as Error)
+    func activate(with id: String) -> AnyPublisher<VersionResponse, Swift.Error> {
+        Fail(error: NSError(domain: "test", code: 111) as Swift.Error)
             .eraseToAnyPublisher()
     }
 }
