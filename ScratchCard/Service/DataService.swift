@@ -25,7 +25,7 @@ final class DataService: DataServiceProtocol {
     
     init() {
         let configuration = URLSessionConfiguration.default
-        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        configuration.requestCachePolicy = .reloadIgnoringCacheData
         urlSession = URLSession(configuration: configuration)
     }
     
@@ -39,7 +39,6 @@ final class DataService: DataServiceProtocol {
         }
         return urlSession
             .dataTaskPublisher(for: url)
-            .receive(on: DispatchQueue.main)
             .tryMap { $0.data }
             .decode(type: VersionResponse.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()

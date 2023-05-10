@@ -62,7 +62,8 @@ final class AppStateStore: NSObject, ObservableObject {
         let result = shouldActivate
             .withLatestFrom($generatedCode)
             .compactMap { $0 }
-            .flatMapLatest { (service.activate(with: $0).materialize()) }
+            .flatMapLatest { service.activate(with: $0).materialize() }
+            .receive(on: DispatchQueue.main)
             .share()
             .print()
         
