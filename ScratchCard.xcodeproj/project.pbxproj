@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A13916062A07CBBC00BCAE31 /* ScratchCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */; };
+		A16CEEEB2A14D5F700547B5D /* AppStateStore+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */; };
 		A19D80952A06EA9A00AE46A5 /* ScratchCardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80942A06EA9A00AE46A5 /* ScratchCardApp.swift */; };
 		A19D80972A06EA9A00AE46A5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80962A06EA9A00AE46A5 /* MainView.swift */; };
 		A19D80992A06EA9D00AE46A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A19D80982A06EA9D00AE46A5 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardView.swift; sourceTree = "<group>"; };
+		A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStateStore+State.swift"; sourceTree = "<group>"; };
 		A19D80912A06EA9A00AE46A5 /* ScratchCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScratchCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19D80942A06EA9A00AE46A5 /* ScratchCardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardApp.swift; sourceTree = "<group>"; };
 		A19D80962A06EA9A00AE46A5 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				A19D80942A06EA9A00AE46A5 /* ScratchCardApp.swift */,
 				A19D80C32A06EF7600AE46A5 /* AppStateStore.swift */,
+				A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */,
 				A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */,
 				A19D80C12A06EEF900AE46A5 /* Scenes */,
 				A19D80C52A06F63D00AE46A5 /* Service */,
@@ -272,6 +275,7 @@
 				A19D80C42A06EF7600AE46A5 /* AppStateStore.swift in Sources */,
 				A19D80C02A06EEB200AE46A5 /* Text+Format.swift in Sources */,
 				A1ABD5A62A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift in Sources */,
+				A16CEEEB2A14D5F700547B5D /* AppStateStore+State.swift in Sources */,
 				A19D80952A06EA9A00AE46A5 /* ScratchCardApp.swift in Sources */,
 				A1ABD5A42A0ADB1000CD96F4 /* UNUserNotificationCenter+Ext.swift in Sources */,
 				A19D80C72A06F65400AE46A5 /* DataService.swift in Sources */,

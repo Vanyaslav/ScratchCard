@@ -10,10 +10,7 @@ import UserNotifications
 
 extension UNUserNotificationCenter {
     static func requestAndDelegate(object: UNUserNotificationCenterDelegate) {
-        UNUserNotificationCenter
-            .current()
-            .requestAuthorization(options: [.alert, .badge, .sound])
-        { success, error in
+        Self.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
                 debugPrint("Local notifications granted!")
             } else if let error = error {
@@ -21,8 +18,7 @@ extension UNUserNotificationCenter {
             }
         }
         
-        UNUserNotificationCenter
-            .current().delegate = object
+        Self.current().delegate = object
     }
     
     static func sendNotification(title: String, interval: TimeInterval) {

@@ -10,7 +10,7 @@ import Combine
 import CombineExt
 import UserNotifications
 
-enum State: String {
+enum CodeActivationState: String {
     case unscratched, scratched, activated
     
     var title: String {
@@ -38,26 +38,27 @@ final class AppStateStore: NSObject, ObservableObject {
     let cancelGenerateCode = PassthroughSubject<Void, Never>()
     let subscribeGenerateCode = PassthroughSubject<Void, Never>()
     let shouldActivate = PassthroughSubject<Void, Never>()
+    //
+    private static let initialState: State = .initial
     // out
-    @Published private(set) var stateTitle: String
-    @Published private(set) var showError: String?
-    @Published private(set) var isActivationEnabled: Bool = false
-    @Published private(set) var isScratchEnabled: Bool = true
+    @Published private(set) var stateTitle: String = initialState.title
+    @Published private(set) var isActivationEnabled: Bool = initialState.enableActivation
+    @Published private(set) var isScratchEnabled: Bool = initialState.enableScratch
     
     @Published private(set) var generatedCode: String?
     
     private var generateCodeAction: Cancellable?
+    private let generateCode = PassthroughSubject<Void, Never>()
     
     init(
-        stateTitle: String = State.initial.title,
         service: DataServiceProtocol,
         initialCode: String? = nil
     ) {
-        self.stateTitle = stateTitle
         self.generatedCode = initialCode
         super.init()
         
-        UNUserNotificationCenter.requestAndDelegate(object: self)
+        UNUserNotificationCenter
+            .requestAndDelegate(object: self)
         
         let result = shouldActivate
             .withLatestFrom($generatedCode)
@@ -67,49 +68,42 @@ final class AppStateStore: NSObject, ObservableObject {
             .share()
             .print()
         
-        result.values()
-            .compactMap { $0.ios }
-            .sink { [weak self] in
-                if Decimal(string: $0) ?? 0 > 6.1 {
-                    self?.stateTitle = State.activated.title
-                } else {
-                    self?.showError = "Activation was not successful!"
-                }
-            }
-            .store(in: &cancellables)
+        let state = Publishers
+            .Merge3(
+                result.values()
+                    .compactMap { $0.ios }
+                    .map(State.Action.processActivationData),
+                result.failures()
+                    .map(State.Action.processActivationError),
+                generateCode
+                    .map { _ in State.Action.generateCode }
+            )
+            .scan(State()) { $0.apply($1) }
+            .share()
         
-        result.failures()
-            .map { $0.localizedDescription }
-            .assign(to: &$showError)
+        state.map { $0.title }.removeDuplicates().assign(to: &$stateTitle)
+        state.map { $0.enableScratch }.removeDuplicates().assign(to: &$isScratchEnabled)
+        state.map { $0.enableActivation }.removeDuplicates().assign(to: &$isActivationEnabled)
+        state.map { $0.generatedCode }.removeDuplicates().assign(to: &$generatedCode)
+        
+        state.map { $0.errorResponse }
+            .removeDuplicates { $0?.0 == $1?.0 }
+            .compactMap { $0?.1 }
+            .sink {
+                UNUserNotificationCenter
+                    .sendNotification(title: $0, interval: 1) }
+            .store(in: &cancellables)
         
         subscribeGenerateCode
             .sink { [weak self] in
                 guard let self else { return }
                 self.generateCodeAction = self.shouldGenerateCode
                     .delay(for: 2, scheduler: RunLoop.current)
-                    .sink {
-                        self.generatedCode = UUID().uuidString
-                        self.stateTitle = State.scratched.title
-                        self.isScratchEnabled = false
-                    }
+                    .sink { self.generateCode.send() }
             }.store(in: &cancellables)
-        
-        $generatedCode
-            .compactMap { $0 }
-            .filter { !$0.isEmpty }
-            .map { _ in true }
-            .removeDuplicates()
-            .assign(to: &$isActivationEnabled)
         
         cancelGenerateCode
             .sink { [weak self] _ in self?.generateCodeAction?.cancel() }
-            .store(in: &cancellables)
-        
-        $showError
-            .compactMap { $0 }
-            .sink {
-                UNUserNotificationCenter
-                    .sendNotification(title: $0, interval: 1) }
             .store(in: &cancellables)
     }
 }
