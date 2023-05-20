@@ -34,24 +34,24 @@ enum CodeActivationState: String {
 final class AppStateStore: NSObject, ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     // in
-    let shouldGenerateCode = PassthroughSubject<Void, Never>()
-    let cancelGenerateCode = PassthroughSubject<Void, Never>()
-    let subscribeGenerateCode = PassthroughSubject<Void, Never>()
-    let shouldActivate = PassthroughSubject<Void, Never>()
+    let shouldGenerateCode = PassthroughRelay<Void>()
+    let cancelGenerateCode = PassthroughRelay <Void>()
+    let subscribeGenerateCode = PassthroughRelay<Void>()
+    let shouldActivate = PassthroughRelay<Void>()
     //
-    private static let initialState: State = .initial
+    private static let storeState = State()
     // out
-    @Published private(set) var stateTitle: String = initialState.title
-    @Published private(set) var isActivationEnabled: Bool = initialState.enableActivation
-    @Published private(set) var isScratchEnabled: Bool = initialState.enableScratch
+    @Published private(set) var stateTitle: String = storeState.title
+    @Published private(set) var isActivationEnabled: Bool = storeState.enableActivation
+    @Published private(set) var isScratchEnabled: Bool = storeState.enableScratch
     
     @Published private(set) var generatedCode: String?
     
     private var generateCodeAction: Cancellable?
-    private let generateCode = PassthroughSubject<Void, Never>()
+    private let generateCode = PassthroughRelay<Void>()
     
     init(
-        service: DataServiceProtocol,
+        service: DataServiceProtocol = DataService(),
         initialCode: String? = nil
     ) {
         self.generatedCode = initialCode
@@ -71,14 +71,13 @@ final class AppStateStore: NSObject, ObservableObject {
         let state = Publishers
             .Merge3(
                 result.values()
-                    .compactMap { $0.ios }
                     .map(State.Action.processActivationData),
                 result.failures()
                     .map(State.Action.processActivationError),
                 generateCode
                     .map { _ in State.Action.generateCode }
             )
-            .scan(State()) { $0.apply($1) }
+            .scan(Self.storeState) { $0.apply($1) }
             .share()
         
         state.map { $0.title }.removeDuplicates().assign(to: &$stateTitle)
@@ -91,7 +90,7 @@ final class AppStateStore: NSObject, ObservableObject {
             .compactMap { $0?.1 }
             .sink {
                 UNUserNotificationCenter
-                    .sendNotification(title: $0, interval: 1) }
+                    .sendNotification(subTitle: $0) }
             .store(in: &cancellables)
         
         subscribeGenerateCode
@@ -99,11 +98,11 @@ final class AppStateStore: NSObject, ObservableObject {
                 guard let self else { return }
                 self.generateCodeAction = self.shouldGenerateCode
                     .delay(for: 2, scheduler: RunLoop.current)
-                    .sink { self.generateCode.send() }
+                    .sink { self.generateCode.accept() }
             }.store(in: &cancellables)
         
         cancelGenerateCode
-            .sink { [weak self] _ in self?.generateCodeAction?.cancel() }
+            .sink { [weak self] in self?.generateCodeAction?.cancel() }
             .store(in: &cancellables)
     }
 }

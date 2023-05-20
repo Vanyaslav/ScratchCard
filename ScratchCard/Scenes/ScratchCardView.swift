@@ -14,17 +14,17 @@ struct ScratchCardView: View {
     var body: some View {
         VStack {
             Spacer()
-            Button { store.shouldGenerateCode.send() } label: {
+            Button { store.shouldGenerateCode.accept() } label: {
                 Text("Scratch the card")
                     .formatButtonText()
             }.enabled(store.isScratchEnabled)
         }
         .padding()
         .onAppear() {
-            store.subscribeGenerateCode.send()
+            store.subscribeGenerateCode.accept()
         }
         .onDisappear() {
-            store.cancelGenerateCode.send()
+            store.cancelGenerateCode.accept()
         }
     }
 }

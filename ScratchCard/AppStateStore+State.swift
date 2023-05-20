@@ -49,8 +49,9 @@ extension AppStateStore.State {
             state.enableScratch = false
             state.enableActivation = true
             
-        case .processActivationData(let version):
-            if Decimal(string: version) ?? 0 > 6.1 {
+        case .processActivationData(let data):
+            if let version = data.ios,
+               Decimal(string: version) ?? 0 > 6.1 {
                 state.state = .activated
             } else {
                 state.failureCount += 1
@@ -69,7 +70,7 @@ extension AppStateStore.State {
 extension AppStateStore.State {
     enum Action {
         case generateCode,
-             processActivationData(_ data: String),
+             processActivationData(_ data: VersionResponse),
              processActivationError(_ error: Swift.Error)
     }
 }

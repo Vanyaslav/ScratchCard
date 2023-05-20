@@ -14,7 +14,7 @@ struct ActivationView: View {
     var body: some View {
         VStack {
             Spacer()
-            Button { store.shouldActivate.send() } label: {
+            Button { store.shouldActivate.accept() } label: {
                 Text("Activate")
                     .formatButtonText()
             }

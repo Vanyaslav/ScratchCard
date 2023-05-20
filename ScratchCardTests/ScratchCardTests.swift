@@ -13,13 +13,13 @@ final class ScratchCardTests: XCTestCase {
     func testCancelScratching() throws {
         let expectation = expectation(description: "Cancel scratching")
         let sut = AppStateStore(service: MockPositiveActivationService())
-        sut.subscribeGenerateCode.send()
-        sut.shouldGenerateCode.send()
+        sut.subscribeGenerateCode.accept()
+        sut.shouldGenerateCode.accept()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
             XCTAssertEqual(sut.stateTitle, "Unscratched")
             XCTAssert(sut.generatedCode == nil)
-            sut.cancelGenerateCode.send()
+            sut.cancelGenerateCode.accept()
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             XCTAssertEqual(sut.stateTitle, "Unscratched")
@@ -33,16 +33,16 @@ final class ScratchCardTests: XCTestCase {
     func testScraichingAndActivationFailure() throws {
         let expectation = expectation(description: "Activation failure")
         let sut = AppStateStore(service: MockActivationFailedService())
-        sut.subscribeGenerateCode.send()
-        sut.shouldGenerateCode.send()
+        sut.subscribeGenerateCode.accept()
+        sut.shouldGenerateCode.accept()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
             XCTAssertEqual(sut.stateTitle, "Unscratched")
-            XCTAssert(sut.generatedCode == nil)
+            XCTAssertNil(sut.generatedCode)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.1) {
             XCTAssertEqual(sut.stateTitle, "Scratched")
-            XCTAssert(sut.generatedCode != nil)
-            sut.shouldActivate.send()
+            XCTAssertNotNil(sut.generatedCode)
+            sut.shouldActivate.accept()
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
@@ -56,7 +56,7 @@ final class ScratchCardTests: XCTestCase {
     func testActivationPositive() throws {
         let expectation = expectation(description: "Activation positive")
         let sut = AppStateStore(service: MockPositiveActivationService(), initialCode: "hdghsghshsgs")
-        sut.shouldActivate.send()
+        sut.shouldActivate.accept()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             XCTAssertEqual(sut.stateTitle, "Activated")
@@ -69,7 +69,7 @@ final class ScratchCardTests: XCTestCase {
     func testActivationNegative() throws {
         let expectation = expectation(description: "Activation negative")
         let sut = AppStateStore(service: MockNegativeActivationService(), initialCode: "hdghsghshsgs")
-        sut.shouldActivate.send()
+        sut.shouldActivate.accept()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             XCTAssertEqual(sut.stateTitle, "Unscratched")

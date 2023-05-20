@@ -21,9 +21,13 @@ extension UNUserNotificationCenter {
         Self.current().delegate = object
     }
     
-    static func sendNotification(title: String, interval: TimeInterval) {
+    static func sendNotification(
+        title: String = "Activation failed!",
+        subTitle: String,
+        interval: TimeInterval = 1
+    ) {
         let content = UNMutableNotificationContent()
-        content.title = "Activation failed!"
+        content.title = title
         content.subtitle = title
         content.sound = UNNotificationSound.defaultCritical
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
