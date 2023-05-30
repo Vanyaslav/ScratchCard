@@ -13,6 +13,12 @@ struct ScratchCardView: View {
     
     var body: some View {
         VStack {
+            if let code = store.generatedCode {
+                Text("Scratched code:")
+                    .padding(.bottom, 16)
+                Text(code)
+            }
+            
             Spacer()
             Button { store.shouldGenerateCode.accept() } label: {
                 Text("Scratch the card")

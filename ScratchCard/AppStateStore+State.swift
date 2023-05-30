@@ -8,66 +8,6 @@
 import Foundation
 
 extension AppStateStore.State {
-    static var initial: Self {
-        .init(
-            state: .unscratched,
-            enableActivation: false,
-            enableScratch: true
-        )
-    }
-}
-
-extension AppStateStore.State {
-    private init(
-        state: CodeActivationState,
-        enableActivation: Bool,
-        enableScratch: Bool
-    ) {
-        self.state = state
-        self.title = state.title
-        self.enableActivation = enableActivation
-        self.enableScratch = enableScratch
-    }
-    
-    init(
-        state: Self = .initial
-    ) {
-        self.state = state.state
-        self.title = state.state.title
-        self.enableActivation = state.enableActivation
-        self.enableScratch = state.enableScratch
-    }
-}
-
-extension AppStateStore.State {
-    func apply(_ action: Action) -> Self {
-        var state = self
-        switch action {
-        case .generateCode:
-            state.generatedCode = UUID().uuidString
-            state.state = .scratched
-            state.enableScratch = false
-            state.enableActivation = true
-            
-        case .processActivationData(let data):
-            if let version = data.ios,
-               Decimal(string: version) ?? 0 > 6.1 {
-                state.state = .activated
-            } else {
-                state.failureCount += 1
-                state.errorResponse = (state.failureCount, "Activation was not successful!")
-            }
-            
-        case .processActivationError(let error):
-            state.failureCount += 1
-            state.errorResponse = (state.failureCount, error.localizedDescription)
-            
-        }
-        return state
-    }
-}
-
-extension AppStateStore.State {
     enum Action {
         case generateCode,
              processActivationData(_ data: VersionResponse),
@@ -77,9 +17,9 @@ extension AppStateStore.State {
 
 extension AppStateStore {
     struct State {
-        private var state: CodeActivationState {
+        private var activationState: CodeActivationState {
             didSet {
-                title = state.title
+                title = activationState.title
             }
         }
         
@@ -88,7 +28,54 @@ extension AppStateStore {
         private(set) var title: String
         private(set) var enableActivation: Bool
         private(set) var enableScratch: Bool
-        private(set) var errorResponse: (Int, String)?
+        private(set) var errorResponse: ErrorResponse?
         private(set) var generatedCode: String?
     }
+}
+
+extension AppStateStore.State {
+    init(
+        activationState: CodeActivationState = .initial,
+        enableActivation: Bool = false,
+        enableScratch: Bool = true
+    ) {
+        self.activationState = activationState
+        self.title = activationState.title
+        self.enableActivation = enableActivation
+        self.enableScratch = enableScratch
+    }
+}
+
+extension AppStateStore.State {
+    func apply(_ action: Action) -> Self {
+        var state = self
+        switch action {
+        case .generateCode:
+            state.generatedCode = UUID().uuidString
+            state.activationState = .scratched
+            state.enableScratch = false
+            state.enableActivation = true
+            
+        case .processActivationData(let data):
+            if let version = data.ios,
+               Decimal(string: version) ?? 0 > 6.1 {
+                state.activationState = .activated
+            } else {
+                state.failureCount += 1
+                state.errorResponse = .init(count: state.failureCount,
+                                            message: "Activation was not successful!")
+            }
+            
+        case .processActivationError(let error):
+            state.failureCount += 1
+            state.errorResponse = .init(count: state.failureCount,
+                                        message: error.localizedDescription)
+        }
+        return state
+    }
+}
+
+struct ErrorResponse: Equatable {
+    let count: Int
+    let message: String
 }

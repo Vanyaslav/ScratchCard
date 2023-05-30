@@ -10,51 +10,35 @@ import Combine
 import CombineExt
 import UserNotifications
 
-enum CodeActivationState: String {
-    case unscratched, scratched, activated
-    
-    var title: String {
-        switch self {
-        case .unscratched:
-            return "Unscratched"
-            
-        case .scratched:
-            return "Scratched"
-            
-        case .activated:
-            return "Activated"
-        }
-    }
-    
-    static var initial: Self {
-        .unscratched
-    }
+extension AppStateStore {
+    // in seconds
+    var simulateScratchTime: RunLoop.SchedulerTimeType.Stride { 2 }
 }
 
 final class AppStateStore: NSObject, ObservableObject {
+    // private
     private var cancellables = Set<AnyCancellable>()
+    private var generateCodeAction: Cancellable?
+    private let generateCode = PassthroughRelay<Void>()
     // in
     let shouldGenerateCode = PassthroughRelay<Void>()
     let cancelGenerateCode = PassthroughRelay <Void>()
     let subscribeGenerateCode = PassthroughRelay<Void>()
     let shouldActivate = PassthroughRelay<Void>()
-    //
-    private static let storeState = State()
     // out
-    @Published private(set) var stateTitle: String = storeState.title
-    @Published private(set) var isActivationEnabled: Bool = storeState.enableActivation
-    @Published private(set) var isScratchEnabled: Bool = storeState.enableScratch
-    
+    @Published private(set) var stateTitle: String
+    @Published private(set) var isActivationEnabled: Bool
+    @Published private(set) var isScratchEnabled: Bool
     @Published private(set) var generatedCode: String?
-    
-    private var generateCodeAction: Cancellable?
-    private let generateCode = PassthroughRelay<Void>()
+    @Published private(set) var showError: String?
     
     init(
         service: DataServiceProtocol = DataService(),
-        initialCode: String? = nil
+        initialState: State = .init()
     ) {
-        self.generatedCode = initialCode
+        stateTitle = initialState.title
+        isActivationEnabled = initialState.enableActivation
+        isScratchEnabled = initialState.enableScratch
         super.init()
         
         UNUserNotificationCenter
@@ -68,41 +52,34 @@ final class AppStateStore: NSObject, ObservableObject {
             .share()
             .print()
         
-        let state = Publishers
-            .Merge3(
-                result.values()
-                    .map(State.Action.processActivationData),
-                result.failures()
-                    .map(State.Action.processActivationError),
-                generateCode
-                    .map { _ in State.Action.generateCode }
-            )
-            .scan(Self.storeState) { $0.apply($1) }
+        let state = Publishers.Merge3(
+            result.values().map(State.Action.processActivationData),
+            result.failures().map(State.Action.processActivationError),
+            generateCode.map { _ in State.Action.generateCode }
+        )
+            .scan(initialState) { $0.apply($1) }
             .share()
         
         state.map { $0.title }.removeDuplicates().assign(to: &$stateTitle)
         state.map { $0.enableScratch }.removeDuplicates().assign(to: &$isScratchEnabled)
         state.map { $0.enableActivation }.removeDuplicates().assign(to: &$isActivationEnabled)
-        state.map { $0.generatedCode }.removeDuplicates().assign(to: &$generatedCode)
+        state.compactMap { $0.generatedCode }.removeDuplicates().assign(to: &$generatedCode)
+        state.compactMap { $0.errorResponse }.removeDuplicates().map { $0.message }.assign(to: &$showError)
         
-        state.map { $0.errorResponse }
-            .removeDuplicates { $0?.0 == $1?.0 }
-            .compactMap { $0?.1 }
-            .sink {
-                UNUserNotificationCenter
-                    .sendNotification(subTitle: $0) }
+        $showError
+            .compactMap { $0 }
+            .sink { UNUserNotificationCenter.sendNotification(subTitle: $0) }
             .store(in: &cancellables)
         
         subscribeGenerateCode
-            .sink { [weak self] in
-                guard let self else { return }
+            .sink {
                 self.generateCodeAction = self.shouldGenerateCode
-                    .delay(for: 2, scheduler: RunLoop.current)
+                    .delay(for: self.simulateScratchTime, scheduler: RunLoop.current)
                     .sink { self.generateCode.accept() }
             }.store(in: &cancellables)
         
         cancelGenerateCode
-            .sink { [weak self] in self?.generateCodeAction?.cancel() }
+            .sink { self.generateCodeAction?.cancel() }
             .store(in: &cancellables)
     }
 }
