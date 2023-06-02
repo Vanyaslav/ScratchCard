@@ -21,9 +21,9 @@ final class AppStateStore: NSObject, ObservableObject {
     private var generateCodeAction: Cancellable?
     private let generateCode = PassthroughRelay<Void>()
     // in
-    let shouldGenerateCode = PassthroughRelay<Void>()
-    let cancelGenerateCode = PassthroughRelay <Void>()
     let subscribeGenerateCode = PassthroughRelay<Void>()
+    let cancelGenerateCode = PassthroughRelay <Void>()
+    let shouldGenerateCode = PassthroughRelay<Void>()
     let shouldActivate = PassthroughRelay<Void>()
     // out
     @Published private(set) var stateTitle: String

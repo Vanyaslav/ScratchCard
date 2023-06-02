@@ -61,17 +61,18 @@ extension AppStateStore.State {
                Decimal(string: version) ?? 0 > 6.1 {
                 state.activationState = .activated
             } else {
-                state.failureCount += 1
-                state.errorResponse = .init(count: state.failureCount,
-                                            message: "Activation was not successful!")
+                state.manageError(message: "Activation was not successful!")
             }
             
         case .processActivationError(let error):
-            state.failureCount += 1
-            state.errorResponse = .init(count: state.failureCount,
-                                        message: error.localizedDescription)
+            state.manageError(message: error.localizedDescription)
         }
         return state
+    }
+    
+    private mutating func manageError(message: String) {
+        failureCount += 1
+        errorResponse = .init(count: failureCount, message: message)
     }
 }
 

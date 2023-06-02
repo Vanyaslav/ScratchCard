@@ -54,6 +54,7 @@
 		A1ABD5A12A07EC8D00CD96F4 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
 		A1ABD5A32A0ADB0F00CD96F4 /* UNUserNotificationCenter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Ext.swift"; sourceTree = "<group>"; };
 		A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStateStore+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
+		A1F7C3FA2A29D05200B9FAE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +106,7 @@
 				A19D80C12A06EEF900AE46A5 /* Scenes */,
 				A19D80C52A06F63D00AE46A5 /* Service */,
 				A19D80BE2A06EE9400AE46A5 /* Extentions */,
-				A19D80C22A06EF1C00AE46A5 /* Resourses */,
+				A19D80C22A06EF1C00AE46A5 /* Resources */,
 				A19D809A2A06EA9D00AE46A5 /* Preview Content */,
 			);
 			path = ScratchCard;
@@ -147,12 +148,13 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-		A19D80C22A06EF1C00AE46A5 /* Resourses */ = {
+		A19D80C22A06EF1C00AE46A5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A1F7C3FA2A29D05200B9FAE7 /* Info.plist */,
 				A19D80982A06EA9D00AE46A5 /* Assets.xcassets */,
 			);
-			path = Resourses;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		A19D80C52A06F63D00AE46A5 /* Service */ = {
@@ -429,7 +431,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ScratchCard/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = ScratchCard/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -457,7 +459,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ScratchCard/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = ScratchCard/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
