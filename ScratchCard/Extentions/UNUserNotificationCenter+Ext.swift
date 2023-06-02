@@ -28,7 +28,7 @@ extension UNUserNotificationCenter {
     ) {
         let content = UNMutableNotificationContent()
         content.title = title
-        content.subtitle = title
+        content.subtitle = subTitle
         content.sound = UNNotificationSound.defaultCritical
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)

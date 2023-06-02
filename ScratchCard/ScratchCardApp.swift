@@ -18,12 +18,6 @@ struct ScratchCardApp: App {
     }
 }
 
-extension Resolver: ResolverRegistering {
-    public static func registerAllServices() {
-        register { AppStateStore() }.scope(.shared)
-    }
-}
-
 final class AppRouter {
     init() {
         Resolver.registerAllServices()
@@ -33,5 +27,11 @@ final class AppRouter {
 extension AppRouter {
     func mainView() -> some View {
         MainView()
+    }
+}
+
+extension Resolver: ResolverRegistering {
+    public static func registerAllServices() {
+        register { AppStateStore() }.scope(.shared)
     }
 }
