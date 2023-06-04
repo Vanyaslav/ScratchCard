@@ -1,0 +1,3 @@
+# ScratchCard
+
+Immutable state example.
