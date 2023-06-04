@@ -10,28 +10,13 @@ import Resolver
 
 @main
 struct ScratchCardApp: App {
+    @StateObject private var router: AppRouter = .init()
+    
     var body: some Scene {
         WindowGroup {
-            AppRouter()
+            router
                 .mainView()
+                .environmentObject(router)
         }
-    }
-}
-
-extension Resolver: ResolverRegistering {
-    public static func registerAllServices() {
-        register { AppStateStore(service: DataService()) }.scope(.shared)
-    }
-}
-
-final class AppRouter {
-    init() {
-        Resolver.registerAllServices()
-    }
-}
-
-extension AppRouter {
-    func mainView() -> some View {
-        MainView()
     }
 }

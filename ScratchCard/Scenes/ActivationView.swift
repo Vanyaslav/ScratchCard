@@ -9,12 +9,12 @@ import SwiftUI
 import Resolver
 
 struct ActivationView: View {
-    @InjectedObject var store: AppStateStore
+    @InjectedObject private var store: AppStateStore
     
     var body: some View {
         VStack {
             Spacer()
-            Button { store.shouldActivate.send() } label: {
+            Button { store.shouldActivate.accept() } label: {
                 Text("Activate")
                     .formatButtonText()
             }
