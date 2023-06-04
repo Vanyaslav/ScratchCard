@@ -23,7 +23,9 @@
 		A1ABD5A22A07EC8D00CD96F4 /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD5A12A07EC8D00CD96F4 /* View+Ext.swift */; };
 		A1ABD5A42A0ADB1000CD96F4 /* UNUserNotificationCenter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD5A32A0ADB0F00CD96F4 /* UNUserNotificationCenter+Ext.swift */; };
 		A1ABD5A62A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */; };
+		A1D477A22A2C63C100EC6801 /* AppRouter+Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D477A12A2C63C100EC6801 /* AppRouter+Navigate.swift */; };
 		A1F007372A07CF47006BC5E7 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = A1F007362A07CF47006BC5E7 /* Resolver */; };
+		A1F7C3FD2A29E8AD00B9FAE7 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7C3FC2A29E8AD00B9FAE7 /* AppRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +56,9 @@
 		A1ABD5A12A07EC8D00CD96F4 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
 		A1ABD5A32A0ADB0F00CD96F4 /* UNUserNotificationCenter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Ext.swift"; sourceTree = "<group>"; };
 		A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStateStore+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
+		A1D477A12A2C63C100EC6801 /* AppRouter+Navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRouter+Navigate.swift"; sourceTree = "<group>"; };
 		A1F7C3FA2A29D05200B9FAE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1F7C3FC2A29E8AD00B9FAE7 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				A19D80942A06EA9A00AE46A5 /* ScratchCardApp.swift */,
-				A11A67DA2A1EA1F1002845ED /* CodeActivationState.swift */,
-				A19D80C32A06EF7600AE46A5 /* AppStateStore.swift */,
-				A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */,
-				A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */,
+				A1D477A32A2C63E600EC6801 /* AppRouter */,
+				A1F7C3FB2A29D92800B9FAE7 /* AppStateStore */,
 				A19D80C12A06EEF900AE46A5 /* Scenes */,
 				A19D80C52A06F63D00AE46A5 /* Service */,
 				A19D80BE2A06EE9400AE46A5 /* Extentions */,
@@ -141,8 +143,8 @@
 		A19D80C12A06EEF900AE46A5 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				A19D80CB2A0704F700AE46A5 /* ActivationView.swift */,
 				A19D80962A06EA9A00AE46A5 /* MainView.swift */,
+				A19D80CB2A0704F700AE46A5 /* ActivationView.swift */,
 				A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */,
 			);
 			path = Scenes;
@@ -163,6 +165,26 @@
 				A19D80C62A06F65400AE46A5 /* DataService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		A1D477A32A2C63E600EC6801 /* AppRouter */ = {
+			isa = PBXGroup;
+			children = (
+				A1F7C3FC2A29E8AD00B9FAE7 /* AppRouter.swift */,
+				A1D477A12A2C63C100EC6801 /* AppRouter+Navigate.swift */,
+			);
+			path = AppRouter;
+			sourceTree = "<group>";
+		};
+		A1F7C3FB2A29D92800B9FAE7 /* AppStateStore */ = {
+			isa = PBXGroup;
+			children = (
+				A11A67DA2A1EA1F1002845ED /* CodeActivationState.swift */,
+				A19D80C32A06EF7600AE46A5 /* AppStateStore.swift */,
+				A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */,
+				A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */,
+			);
+			path = AppStateStore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,6 +305,8 @@
 				A1ABD5A62A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift in Sources */,
 				A16CEEEB2A14D5F700547B5D /* AppStateStore+State.swift in Sources */,
 				A19D80952A06EA9A00AE46A5 /* ScratchCardApp.swift in Sources */,
+				A1F7C3FD2A29E8AD00B9FAE7 /* AppRouter.swift in Sources */,
+				A1D477A22A2C63C100EC6801 /* AppRouter+Navigate.swift in Sources */,
 				A1ABD5A42A0ADB1000CD96F4 /* UNUserNotificationCenter+Ext.swift in Sources */,
 				A19D80C72A06F65400AE46A5 /* DataService.swift in Sources */,
 			);
