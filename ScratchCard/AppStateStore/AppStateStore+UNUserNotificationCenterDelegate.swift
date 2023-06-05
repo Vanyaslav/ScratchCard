@@ -8,7 +8,6 @@
 import Foundation
 import UserNotifications
 
-
 extension AppStateStore: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse) async {

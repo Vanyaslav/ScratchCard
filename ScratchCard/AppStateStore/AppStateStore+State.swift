@@ -61,6 +61,7 @@ extension AppStateStore.State {
                Decimal(string: version) ?? 0 > 6.1 {
                 state.activationState = .activated
             } else {
+                state.activationState = .deactivated
                 state.manageError(message: "Activation was not successful!")
             }
             

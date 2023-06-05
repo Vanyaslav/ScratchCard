@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A11A67DB2A1EA1F1002845ED /* CodeActivationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A67DA2A1EA1F1002845ED /* CodeActivationState.swift */; };
+		A13359082A2E02EE005BC5F1 /* Publisher+AppStateStore.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13359072A2E02EE005BC5F1 /* Publisher+AppStateStore.State.swift */; };
 		A13916062A07CBBC00BCAE31 /* ScratchCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */; };
 		A16CEEEB2A14D5F700547B5D /* AppStateStore+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */; };
 		A19D80952A06EA9A00AE46A5 /* ScratchCardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80942A06EA9A00AE46A5 /* ScratchCardApp.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		A11A67DA2A1EA1F1002845ED /* CodeActivationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeActivationState.swift; sourceTree = "<group>"; };
+		A13359072A2E02EE005BC5F1 /* Publisher+AppStateStore.State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+AppStateStore.State.swift"; sourceTree = "<group>"; };
 		A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardView.swift; sourceTree = "<group>"; };
 		A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStateStore+State.swift"; sourceTree = "<group>"; };
 		A19D80912A06EA9A00AE46A5 /* ScratchCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScratchCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -183,6 +185,7 @@
 				A19D80C32A06EF7600AE46A5 /* AppStateStore.swift */,
 				A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */,
 				A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */,
+				A13359072A2E02EE005BC5F1 /* Publisher+AppStateStore.State.swift */,
 			);
 			path = AppStateStore;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1ABD5A22A07EC8D00CD96F4 /* View+Ext.swift in Sources */,
+				A13359082A2E02EE005BC5F1 /* Publisher+AppStateStore.State.swift in Sources */,
 				A13916062A07CBBC00BCAE31 /* ScratchCardView.swift in Sources */,
 				A11A67DB2A1EA1F1002845ED /* CodeActivationState.swift in Sources */,
 				A19D80CC2A0704F700AE46A5 /* ActivationView.swift in Sources */,

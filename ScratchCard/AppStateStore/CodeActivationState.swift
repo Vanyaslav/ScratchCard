@@ -7,8 +7,14 @@
 
 import Foundation
 
+extension CodeActivationState {
+    static var initial: Self {
+        .unscratched
+    }
+}
+
 enum CodeActivationState: String {
-    case unscratched, scratched, activated
+    case unscratched, scratched, activated, deactivated
     
     var title: String {
         switch self {
@@ -20,10 +26,9 @@ enum CodeActivationState: String {
             
         case .activated:
             return "Activated"
+            
+        case .deactivated:
+            return "Deactivated"
         }
-    }
-    
-    static var initial: Self {
-        .unscratched
     }
 }

@@ -53,18 +53,24 @@ final class AppStateStore: NSObject, ObservableObject {
             .print()
         
         let state = Publishers.Merge3(
-            result.values().map(State.Action.processActivationData),
-            result.failures().map(State.Action.processActivationError),
-            generateCode.map { _ in State.Action.generateCode }
+            result.values()
+                .map(State.Action.processActivationData),
+            result.failures()
+                .map(State.Action.processActivationError),
+            generateCode
+                .map { _ in State.Action.generateCode }
         )
             .scan(initialState) { $0.apply($1) }
             .share()
         
-        state.map { $0.title }.removeDuplicates().assign(to: &$stateTitle)
-        state.map { $0.enableScratch }.removeDuplicates().assign(to: &$isScratchEnabled)
-        state.map { $0.enableActivation }.removeDuplicates().assign(to: &$isActivationEnabled)
-        state.compactMap { $0.generatedCode }.removeDuplicates().assign(to: &$generatedCode)
-        state.compactMap { $0.errorResponse }.removeDuplicates().map { $0.message }.assign(to: &$showError)
+        state.bind(\.title, to: &$stateTitle)
+        state.bind(\.enableScratch, to: &$isScratchEnabled)
+        state.bind(\.enableActivation, to: &$isActivationEnabled)
+        state.bind(\.generatedCode, to: &$generatedCode)
+        state.compactMap { $0.errorResponse }
+            .removeDuplicates()
+            .map { $0.message }
+            .assign(to: &$showError)
         
         $showError
             .compactMap { $0 }
@@ -72,14 +78,19 @@ final class AppStateStore: NSObject, ObservableObject {
             .store(in: &cancellables)
         
         subscribeGenerateCode
-            .sink {
+            .sink { [weak self] in
+                guard let self else { return }
                 self.generateCodeAction = self.shouldGenerateCode
-                    .delay(for: self.simulateScratchTime, scheduler: RunLoop.current)
-                    .sink { self.generateCode.accept() }
+                    .delay(for: self.simulateScratchTime,
+                           scheduler: RunLoop.current)
+                    .sink {
+                        self.generateCodeAction?.cancel()
+                        self.generateCode.accept()
+                    }
             }.store(in: &cancellables)
         
         cancelGenerateCode
-            .sink { self.generateCodeAction?.cancel() }
+            .sink { [weak self] in self?.generateCodeAction?.cancel() }
             .store(in: &cancellables)
     }
 }

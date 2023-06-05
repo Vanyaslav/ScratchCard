@@ -10,6 +10,15 @@ import XCTest
 import Combine
 
 final class ScratchCardStoreTests: XCTestCase {
+    func testInitialState() throws {
+        let sut = AppStateStore(service: MockPositiveActivationService())
+        XCTAssertEqual(sut.stateTitle, "Unscratched")
+        XCTAssertTrue(sut.isScratchEnabled)
+        XCTAssertFalse(sut.isActivationEnabled)
+        XCTAssertNil(sut.generatedCode)
+        XCTAssertNil(sut.showError)
+    }
+    
     func testCancelScratching() throws {
         let expectation = expectation(description: "Cancel scratching")
         let sut = AppStateStore(service: MockPositiveActivationService())
@@ -98,7 +107,7 @@ final class ScratchCardStoreTests: XCTestCase {
             XCTAssertNil(sut.showError)
             sut.shouldActivate.accept()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                XCTAssertEqual(sut.stateTitle, "Scratched")
+                XCTAssertEqual(sut.stateTitle, "Deactivated")
                 XCTAssertFalse(sut.isScratchEnabled)
                 XCTAssertTrue(sut.isActivationEnabled)
                 XCTAssertEqual(sut.showError, "Activation was not successful!")
