@@ -10,13 +10,10 @@ import Resolver
 
 @main
 struct ScratchCardApp: App {
-    @StateObject private var router: AppRouter = .init()
-    
     var body: some Scene {
         WindowGroup {
-            router
+            AppRouter()
                 .mainView()
-                .environmentObject(router)
         }
     }
 }

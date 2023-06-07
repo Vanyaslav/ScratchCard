@@ -10,11 +10,11 @@ import Resolver
 
 extension AppRouter {
     func mainView() -> some View {
-        MainView()
+        MainView(router: self)
     }
 }
 
-final class AppRouter: ObservableObject {
+final class AppRouter {
     init() {
         Resolver.registerAllServices()
     }

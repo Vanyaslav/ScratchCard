@@ -104,13 +104,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A133590B2A307E1C005BC5F1 /* ScratchCardUITests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ScratchCardUITests;
-			sourceTree = "<group>";
-		};
 		A13359112A307E76005BC5F1 /* ScratchCardUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,7 +118,6 @@
 			children = (
 				A19D80932A06EA9A00AE46A5 /* ScratchCard */,
 				A19D80A42A06EA9E00AE46A5 /* ScratchCardTests */,
-				A133590B2A307E1C005BC5F1 /* ScratchCardUITests */,
 				A13359112A307E76005BC5F1 /* ScratchCardUITests */,
 				A19D80922A06EA9A00AE46A5 /* Products */,
 			);
