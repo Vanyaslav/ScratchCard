@@ -11,7 +11,8 @@ extension AppStateStore.State {
     enum Action {
         case generateCode,
              processActivationData(_ data: VersionResponse),
-             processActivationError(_ error: Swift.Error)
+             processActivationError(_ error: Swift.Error),
+             deactivate
     }
 }
 
@@ -27,6 +28,7 @@ extension AppStateStore {
         
         private(set) var title: String
         private(set) var enableActivation: Bool
+        private(set) var enableDeactivation: Bool
         private(set) var enableScratch: Bool
         private(set) var errorResponse: ErrorResponse?
         private(set) var generatedCode: String?
@@ -37,12 +39,14 @@ extension AppStateStore.State {
     init(
         activationState: CodeActivationState = .initial,
         enableActivation: Bool = false,
+        enableDeactivation: Bool = false,
         enableScratch: Bool = true
     ) {
         self.activationState = activationState
         self.title = activationState.title
         self.enableActivation = enableActivation
         self.enableScratch = enableScratch
+        self.enableDeactivation = enableDeactivation
     }
 }
 
@@ -60,6 +64,7 @@ extension AppStateStore.State {
             if let version = data.ios,
                Decimal(string: version) ?? 0 > 6.1 {
                 state.activationState = .activated
+                state.enableDeactivation = true
             } else {
                 state.activationState = .deactivated
                 state.manageError(message: "Activation was not successful!")
@@ -67,6 +72,11 @@ extension AppStateStore.State {
             
         case .processActivationError(let error):
             state.manageError(message: error.localizedDescription)
+            
+        case .deactivate:
+            state.activationState = .deactivated
+            state.manageError(message: "Coupon was deactivated!")
+            state.enableDeactivation = false
         }
         return state
     }

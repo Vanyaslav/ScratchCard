@@ -25,24 +25,26 @@ final class AppStateStore: NSObject, ObservableObject {
     let cancelGenerateCode = PassthroughRelay <Void>()
     let shouldGenerateCode = PassthroughRelay<Void>()
     let shouldActivate = PassthroughRelay<Void>()
+    let shouldDeactivate = PassthroughRelay<Void>()
     // out
     @Published private(set) var stateTitle: String
     @Published private(set) var isActivationEnabled: Bool
+    @Published private(set) var isDeactivationEnabled: Bool
     @Published private(set) var isScratchEnabled: Bool
     @Published private(set) var generatedCode: String?
-    @Published private(set) var showError: String?
     
     init(
         service: DataServiceProtocol = DataService(),
+        alertService: NotificationProtocol = NotificationService(),
         initialState: State = .init()
     ) {
         stateTitle = initialState.title
         isActivationEnabled = initialState.enableActivation
         isScratchEnabled = initialState.enableScratch
+        isDeactivationEnabled = initialState.enableDeactivation
         super.init()
         
-        UNUserNotificationCenter
-            .requestAndDelegate(object: self)
+        alertService.register.accept(self)
         
         let result = shouldActivate
             .withLatestFrom($generatedCode)
@@ -52,13 +54,15 @@ final class AppStateStore: NSObject, ObservableObject {
             .share()
             .print()
         
-        let state = Publishers.Merge3(
+        let state = Publishers.Merge4(
             result.values()
                 .map(State.Action.processActivationData),
             result.failures()
                 .map(State.Action.processActivationError),
             generateCode
-                .map { _ in State.Action.generateCode }
+                .map {_ in State.Action.generateCode },
+            shouldDeactivate
+                .map {_ in State.Action.deactivate }
         )
             .scan(initialState) { $0.apply($1) }
             .share()
@@ -67,14 +71,11 @@ final class AppStateStore: NSObject, ObservableObject {
         state.bind(\.enableScratch, to: &$isScratchEnabled)
         state.bind(\.enableActivation, to: &$isActivationEnabled)
         state.bind(\.generatedCode, to: &$generatedCode)
+        state.bind(\.enableDeactivation, to: &$isDeactivationEnabled)
         state.compactMap { $0.errorResponse }
             .removeDuplicates()
             .map { $0.message }
-            .assign(to: &$showError)
-        
-        $showError
-            .compactMap { $0 }
-            .sink { UNUserNotificationCenter.sendNotification(subTitle: $0) }
+            .sink { alertService.showAlert.accept($0) }
             .store(in: &cancellables)
         
         subscribeGenerateCode
@@ -84,7 +85,7 @@ final class AppStateStore: NSObject, ObservableObject {
                     .delay(for: self.simulateScratchTime,
                            scheduler: RunLoop.current)
                     .sink {
-                        self.generateCodeAction?.cancel()
+                        self.cancelGenerateCode.accept()
                         self.generateCode.accept()
                     }
             }.store(in: &cancellables)

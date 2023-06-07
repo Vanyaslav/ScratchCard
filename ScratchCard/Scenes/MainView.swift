@@ -15,29 +15,39 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 30) {
-                mainTitle()
+                MainTitle()
+                DeactivationButton()
                 Spacer()
-                router.navigateScratchView(text: scratchButton)
-                router.navigateActivationView(text: activationButton)
+                router.navigateScratchView(with: ScratchButton())
+                router.navigateActivationView(with: ActivationButton())
             }.padding()
         }
     }
 }
 
 extension MainView {
-    func mainTitle() -> some View {
+    func MainTitle() -> some View {
         Text(store.stateTitle)
             .formatStateText()
     }
     
-    var scratchButton: some View {
+    func ScratchButton() -> some View {
         Text("Scratch card")
             .formatButtonText()
     }
     
-    var activationButton: some View {
+    func ActivationButton() -> some View {
         Text("Activation")
             .formatButtonText()
+    }
+    
+    func DeactivationButton() -> some View {
+        Text("Deactivate")
+            .formatButtonText()
+            .enabled(store.isDeactivationEnabled)
+            .onTapGesture {
+                store.shouldDeactivate.accept()
+            }
     }
 }
 

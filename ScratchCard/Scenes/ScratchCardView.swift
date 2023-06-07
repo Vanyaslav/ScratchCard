@@ -14,10 +14,10 @@ struct ScratchCardView: View {
     var body: some View {
         VStack {
             if let code = store.generatedCode {
-                codeView(code)
+                CodeView(code)
             }
             Spacer()
-            acceptButton()
+            AcceptButton()
         }
         .padding()
         .onAppear() {
@@ -30,7 +30,7 @@ struct ScratchCardView: View {
 }
 
 extension ScratchCardView {
-    func codeView(_ code: String) -> some View {
+    func CodeView(_ code: String) -> some View {
         VStack {
             Text("Scratched code:")
                 .padding(.bottom, 16)
@@ -38,7 +38,7 @@ extension ScratchCardView {
         }
     }
     
-    func acceptButton() -> some View {
+    func AcceptButton() -> some View {
         Button { store.shouldGenerateCode.accept() } label: {
             Text("Scratch the card")
                 .formatButtonText()
