@@ -34,7 +34,7 @@ final class AppStateStore: NSObject, ObservableObject {
     @Published private(set) var generatedCode: String?
     
     init(
-        service: DataServiceProtocol = DataService(),
+        dataService: DataServiceProtocol = DataService(),
         alertService: NotificationProtocol = NotificationService(),
         initialState: State = .init()
     ) {
@@ -46,28 +46,30 @@ final class AppStateStore: NSObject, ObservableObject {
         
         alertService.register.accept(self)
         
-        let result = shouldActivate
+        let activationResult = shouldActivate
             .withLatestFrom($generatedCode)
             .compactMap { $0 }
-            .flatMapLatest { service.activate(with: $0).materialize() }
-            .receive(on: DispatchQueue.main)
-            .share()
+            .flatMapLatest { dataService.activate(with: $0).materialize() }
             .print()
         
-        let state = Publishers.Merge4(
-            result.values()
-                .map(State.Action.processActivationData),
-            result.failures()
-                .map(State.Action.processActivationError),
+        let state = Publishers.Merge5(
+            activationResult
+                .map(State.Action.process),
             generateCode
-                .map {_ in State.Action.generateCode },
+                .map(State.Action.generateCode),
             shouldDeactivate
-                .map {_ in State.Action.deactivate }
+                .map(State.Action.deactivate),
+            shouldGenerateCode
+                .map(State.Action.startGenerateCode),
+            cancelGenerateCode
+                .map(State.Action.cancelGenerateCode)
         )
+            .receive(on: DispatchQueue.main)
             .scan(initialState) { $0.apply($1) }
             .share()
         
         state.bind(\.title, to: &$stateTitle)
+        // state.map { $0.title }.assign(to: &$stateTitle)
         state.bind(\.enableScratch, to: &$isScratchEnabled)
         state.bind(\.enableActivation, to: &$isActivationEnabled)
         state.bind(\.generatedCode, to: &$generatedCode)
@@ -84,10 +86,7 @@ final class AppStateStore: NSObject, ObservableObject {
                 self.generateCodeAction = self.shouldGenerateCode
                     .delay(for: self.simulateScratchTime,
                            scheduler: RunLoop.current)
-                    .sink {
-                        self.cancelGenerateCode.accept()
-                        self.generateCode.accept()
-                    }
+                    .sink { self.generateCode.accept() }
             }.store(in: &cancellables)
         
         cancelGenerateCode

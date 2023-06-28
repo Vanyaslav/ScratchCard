@@ -14,7 +14,7 @@ final class ScratchCardStoreTests: XCTestCase {
     private var cancellables = Set<AnyCancellable>()
     
     func testInitialState() throws {
-        let sut = AppStateStore(service: MockPositiveActivationService())
+        let sut = AppStateStore()
         XCTAssertEqual(sut.stateTitle, "Unscratched")
         XCTAssertTrue(sut.isScratchEnabled)
         XCTAssertFalse(sut.isActivationEnabled)
@@ -24,13 +24,13 @@ final class ScratchCardStoreTests: XCTestCase {
     
     func testCancelScratching() throws {
         let expectation = expectation(description: "Cancel scratching")
-        let sut = AppStateStore(service: MockPositiveActivationService())
+        let sut = AppStateStore()
         sut.subscribeGenerateCode.accept()
         sut.shouldGenerateCode.accept()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
             XCTAssertEqual(sut.stateTitle, "Unscratched")
-            XCTAssertTrue(sut.isScratchEnabled)
+            XCTAssertFalse(sut.isScratchEnabled)
             XCTAssertFalse(sut.isActivationEnabled)
             XCTAssertFalse(sut.isDeactivationEnabled)
             sut.cancelGenerateCode.accept()
@@ -49,8 +49,7 @@ final class ScratchCardStoreTests: XCTestCase {
     
     func testScratching() throws {
         let expectation = expectation(description: "Scratch code")
-        let mockAlertService = MockNotification()
-        let sut = AppStateStore(service: MockActivationFailedService(), alertService: mockAlertService)
+        let sut = AppStateStore()
         sut.subscribeGenerateCode.accept()
         sut.shouldGenerateCode.accept()
         sut.$stateTitle
@@ -70,7 +69,7 @@ final class ScratchCardStoreTests: XCTestCase {
     func testActivationFailure() throws {
         let expectation = expectation(description: "Activation failure")
         let mockAlertService = MockNotification()
-        let sut = AppStateStore(service: MockActivationFailedService(), alertService: mockAlertService)
+        let sut = AppStateStore(dataService: MockActivationFailedService(), alertService: mockAlertService)
         sut.subscribeGenerateCode.accept()
         sut.shouldGenerateCode.accept()
         
@@ -95,7 +94,7 @@ final class ScratchCardStoreTests: XCTestCase {
     
     func testActivationPositive() throws {
         let expectation = expectation(description: "Activation positive")
-        let sut = AppStateStore(service: MockPositiveActivationService())
+        let sut = AppStateStore(dataService: MockPositiveActivationService())
         sut.subscribeGenerateCode.accept()
         sut.shouldGenerateCode.accept()
         
@@ -110,7 +109,7 @@ final class ScratchCardStoreTests: XCTestCase {
             .delay(for: 0.2, scheduler: RunLoop.current)
             .sink { _ in
                 XCTAssertFalse(sut.isScratchEnabled)
-                XCTAssertTrue(sut.isActivationEnabled)
+                XCTAssertFalse(sut.isActivationEnabled)
                 XCTAssertTrue(sut.isDeactivationEnabled)
                 expectation.fulfill()
             }
@@ -135,7 +134,7 @@ final class ScratchCardStoreTests: XCTestCase {
     func testActivationNegative() throws {
         let expectation = expectation(description: "Activation negative")
         let mockAlertService = MockNotification()
-        let sut = AppStateStore(service: MockNegativeActivationService(), alertService: mockAlertService)
+        let sut = AppStateStore(dataService: MockNegativeActivationService(), alertService: mockAlertService)
         sut.subscribeGenerateCode.accept()
         sut.shouldGenerateCode.accept()
         

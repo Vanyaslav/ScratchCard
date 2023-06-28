@@ -8,7 +8,12 @@
 import SwiftUI
 import Resolver
 
-extension AppRouter {
+protocol RouterProtocol {
+    associatedtype T: View
+    func mainView() -> T
+}
+
+extension AppRouter: RouterProtocol {
     func mainView() -> some View {
         MainView(router: self)
     }

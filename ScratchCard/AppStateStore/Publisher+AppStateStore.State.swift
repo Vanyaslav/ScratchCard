@@ -16,7 +16,7 @@ extension Publisher where Output == AppStateStore.State {
         map(keyPath)
             .removeDuplicates()
             .ignoreFailure()
-            .receive(on: DispatchQueue.main)
+            //.receive(on: DispatchQueue.main)
             .assign(to: &publisher)
     }
 }

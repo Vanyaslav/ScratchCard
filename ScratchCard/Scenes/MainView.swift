@@ -22,7 +22,7 @@ struct MainView: View {
                 MainTitle()
                 DeactivationButton()
                 Spacer()
-                router.navigateScratchView(with: ScratchButton())
+                router.navigateScratchConfirmView(with: ScratchButton())
                 router.navigateActivationView(with: ActivationButton())
             }.padding()
         }
@@ -48,10 +48,8 @@ extension MainView {
     func DeactivationButton() -> some View {
         Text("Deactivate")
             .formatButtonText()
+            .onTapGesture { store.shouldDeactivate.accept() }
             .enabled(store.isDeactivationEnabled)
-            .onTapGesture {
-                store.shouldDeactivate.accept()
-            }
     }
 }
 
