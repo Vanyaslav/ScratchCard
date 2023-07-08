@@ -8,13 +8,18 @@
 import SwiftUI
 import Resolver
 
-extension AppRouter {
+protocol RouterProtocol {
+    associatedtype T: View
+    func mainView() -> T
+}
+
+extension AppRouter: RouterProtocol {
     func mainView() -> some View {
-        MainView()
+        MainView(router: self)
     }
 }
 
-final class AppRouter: ObservableObject {
+final class AppRouter {
     init() {
         Resolver.registerAllServices()
     }

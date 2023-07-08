@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		A11A67DB2A1EA1F1002845ED /* CodeActivationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A67DA2A1EA1F1002845ED /* CodeActivationState.swift */; };
+		A13359082A2E02EE005BC5F1 /* Publisher+AppStateStore.State.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13359072A2E02EE005BC5F1 /* Publisher+AppStateStore.State.swift */; };
+		A133590A2A2E1533005BC5F1 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13359092A2E1533005BC5F1 /* NotificationService.swift */; };
+		A13359132A307E76005BC5F1 /* ScratchCardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13359122A307E76005BC5F1 /* ScratchCardUITests.swift */; };
+		A13359152A307E76005BC5F1 /* ScratchCardUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13359142A307E76005BC5F1 /* ScratchCardUITestsLaunchTests.swift */; };
+		A133591C2A308CF1005BC5F1 /* ScratchConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A133591B2A308CF1005BC5F1 /* ScratchConfirmView.swift */; };
 		A13916062A07CBBC00BCAE31 /* ScratchCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */; };
 		A16CEEEB2A14D5F700547B5D /* AppStateStore+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */; };
 		A19D80952A06EA9A00AE46A5 /* ScratchCardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80942A06EA9A00AE46A5 /* ScratchCardApp.swift */; };
@@ -20,6 +25,7 @@
 		A19D80C72A06F65400AE46A5 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80C62A06F65400AE46A5 /* DataService.swift */; };
 		A19D80CA2A07020E00AE46A5 /* CombineExt in Frameworks */ = {isa = PBXBuildFile; productRef = A19D80C92A07020E00AE46A5 /* CombineExt */; };
 		A19D80CC2A0704F700AE46A5 /* ActivationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80CB2A0704F700AE46A5 /* ActivationView.swift */; };
+		A1A4D13F2A35A89700A77C95 /* StoreRetainCycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A4D13E2A35A89700A77C95 /* StoreRetainCycleTests.swift */; };
 		A1ABD5A22A07EC8D00CD96F4 /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD5A12A07EC8D00CD96F4 /* View+Ext.swift */; };
 		A1ABD5A42A0ADB1000CD96F4 /* UNUserNotificationCenter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD5A32A0ADB0F00CD96F4 /* UNUserNotificationCenter+Ext.swift */; };
 		A1ABD5A62A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */; };
@@ -29,6 +35,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A13359162A307E76005BC5F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A19D80892A06EA9A00AE46A5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A19D80902A06EA9A00AE46A5;
+			remoteInfo = ScratchCard;
+		};
 		A19D80A22A06EA9E00AE46A5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A19D80892A06EA9A00AE46A5 /* Project object */;
@@ -40,6 +53,12 @@
 
 /* Begin PBXFileReference section */
 		A11A67DA2A1EA1F1002845ED /* CodeActivationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeActivationState.swift; sourceTree = "<group>"; };
+		A13359072A2E02EE005BC5F1 /* Publisher+AppStateStore.State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+AppStateStore.State.swift"; sourceTree = "<group>"; };
+		A13359092A2E1533005BC5F1 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		A13359102A307E76005BC5F1 /* ScratchCardUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScratchCardUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A13359122A307E76005BC5F1 /* ScratchCardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardUITests.swift; sourceTree = "<group>"; };
+		A13359142A307E76005BC5F1 /* ScratchCardUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A133591B2A308CF1005BC5F1 /* ScratchConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchConfirmView.swift; sourceTree = "<group>"; };
 		A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardView.swift; sourceTree = "<group>"; };
 		A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStateStore+State.swift"; sourceTree = "<group>"; };
 		A19D80912A06EA9A00AE46A5 /* ScratchCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScratchCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +72,7 @@
 		A19D80C32A06EF7600AE46A5 /* AppStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateStore.swift; sourceTree = "<group>"; };
 		A19D80C62A06F65400AE46A5 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		A19D80CB2A0704F700AE46A5 /* ActivationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivationView.swift; sourceTree = "<group>"; };
+		A1A4D13E2A35A89700A77C95 /* StoreRetainCycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRetainCycleTests.swift; sourceTree = "<group>"; };
 		A1ABD5A12A07EC8D00CD96F4 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
 		A1ABD5A32A0ADB0F00CD96F4 /* UNUserNotificationCenter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Ext.swift"; sourceTree = "<group>"; };
 		A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStateStore+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
@@ -62,6 +82,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A133590D2A307E76005BC5F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A19D808E2A06EA9A00AE46A5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -81,11 +108,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A13359112A307E76005BC5F1 /* ScratchCardUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A13359122A307E76005BC5F1 /* ScratchCardUITests.swift */,
+				A13359142A307E76005BC5F1 /* ScratchCardUITestsLaunchTests.swift */,
+			);
+			path = ScratchCardUITests;
+			sourceTree = "<group>";
+		};
 		A19D80882A06EA9A00AE46A5 = {
 			isa = PBXGroup;
 			children = (
 				A19D80932A06EA9A00AE46A5 /* ScratchCard */,
 				A19D80A42A06EA9E00AE46A5 /* ScratchCardTests */,
+				A13359112A307E76005BC5F1 /* ScratchCardUITests */,
 				A19D80922A06EA9A00AE46A5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,6 +132,7 @@
 			children = (
 				A19D80912A06EA9A00AE46A5 /* ScratchCard.app */,
 				A19D80A12A06EA9E00AE46A5 /* ScratchCardTests.xctest */,
+				A13359102A307E76005BC5F1 /* ScratchCardUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -126,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				A19D80A52A06EA9E00AE46A5 /* ScratchCardTests.swift */,
+				A1A4D13E2A35A89700A77C95 /* StoreRetainCycleTests.swift */,
 			);
 			path = ScratchCardTests;
 			sourceTree = "<group>";
@@ -146,6 +185,7 @@
 				A19D80962A06EA9A00AE46A5 /* MainView.swift */,
 				A19D80CB2A0704F700AE46A5 /* ActivationView.swift */,
 				A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */,
+				A133591B2A308CF1005BC5F1 /* ScratchConfirmView.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -163,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				A19D80C62A06F65400AE46A5 /* DataService.swift */,
+				A13359092A2E1533005BC5F1 /* NotificationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -183,6 +224,7 @@
 				A19D80C32A06EF7600AE46A5 /* AppStateStore.swift */,
 				A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */,
 				A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */,
+				A13359072A2E02EE005BC5F1 /* Publisher+AppStateStore.State.swift */,
 			);
 			path = AppStateStore;
 			sourceTree = "<group>";
@@ -190,6 +232,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A133590F2A307E76005BC5F1 /* ScratchCardUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A13359182A307E76005BC5F1 /* Build configuration list for PBXNativeTarget "ScratchCardUITests" */;
+			buildPhases = (
+				A133590C2A307E76005BC5F1 /* Sources */,
+				A133590D2A307E76005BC5F1 /* Frameworks */,
+				A133590E2A307E76005BC5F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A13359172A307E76005BC5F1 /* PBXTargetDependency */,
+			);
+			name = ScratchCardUITests;
+			productName = ScratchCardUITests;
+			productReference = A13359102A307E76005BC5F1 /* ScratchCardUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		A19D80902A06EA9A00AE46A5 /* ScratchCard */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A19D80B52A06EA9E00AE46A5 /* Build configuration list for PBXNativeTarget "ScratchCard" */;
@@ -239,6 +299,10 @@
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
+					A133590F2A307E76005BC5F1 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = A19D80902A06EA9A00AE46A5;
+					};
 					A19D80902A06EA9A00AE46A5 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -267,11 +331,19 @@
 			targets = (
 				A19D80902A06EA9A00AE46A5 /* ScratchCard */,
 				A19D80A02A06EA9E00AE46A5 /* ScratchCardTests */,
+				A133590F2A307E76005BC5F1 /* ScratchCardUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A133590E2A307E76005BC5F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A19D808F2A06EA9A00AE46A5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -291,11 +363,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A133590C2A307E76005BC5F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A13359132A307E76005BC5F1 /* ScratchCardUITests.swift in Sources */,
+				A13359152A307E76005BC5F1 /* ScratchCardUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A19D808D2A06EA9A00AE46A5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A1ABD5A22A07EC8D00CD96F4 /* View+Ext.swift in Sources */,
+				A13359082A2E02EE005BC5F1 /* Publisher+AppStateStore.State.swift in Sources */,
+				A133591C2A308CF1005BC5F1 /* ScratchConfirmView.swift in Sources */,
 				A13916062A07CBBC00BCAE31 /* ScratchCardView.swift in Sources */,
 				A11A67DB2A1EA1F1002845ED /* CodeActivationState.swift in Sources */,
 				A19D80CC2A0704F700AE46A5 /* ActivationView.swift in Sources */,
@@ -306,6 +389,7 @@
 				A16CEEEB2A14D5F700547B5D /* AppStateStore+State.swift in Sources */,
 				A19D80952A06EA9A00AE46A5 /* ScratchCardApp.swift in Sources */,
 				A1F7C3FD2A29E8AD00B9FAE7 /* AppRouter.swift in Sources */,
+				A133590A2A2E1533005BC5F1 /* NotificationService.swift in Sources */,
 				A1D477A22A2C63C100EC6801 /* AppRouter+Navigate.swift in Sources */,
 				A1ABD5A42A0ADB1000CD96F4 /* UNUserNotificationCenter+Ext.swift in Sources */,
 				A19D80C72A06F65400AE46A5 /* DataService.swift in Sources */,
@@ -317,12 +401,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				A19D80A62A06EA9E00AE46A5 /* ScratchCardTests.swift in Sources */,
+				A1A4D13F2A35A89700A77C95 /* StoreRetainCycleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A13359172A307E76005BC5F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A19D80902A06EA9A00AE46A5 /* ScratchCard */;
+			targetProxy = A13359162A307E76005BC5F1 /* PBXContainerItemProxy */;
+		};
 		A19D80A32A06EA9E00AE46A5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A19D80902A06EA9A00AE46A5 /* ScratchCard */;
@@ -331,6 +421,40 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		A13359192A307E76005BC5F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baculak.tomas.ScratchCardUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ScratchCard;
+			};
+			name = Debug;
+		};
+		A133591A2A307E76005BC5F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.baculak.tomas.ScratchCardUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ScratchCard;
+			};
+			name = Release;
+		};
 		A19D80B32A06EA9E00AE46A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -542,6 +666,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A13359182A307E76005BC5F1 /* Build configuration list for PBXNativeTarget "ScratchCardUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A13359192A307E76005BC5F1 /* Debug */,
+				A133591A2A307E76005BC5F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A19D808C2A06EA9A00AE46A5 /* Build configuration list for PBXProject "ScratchCard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

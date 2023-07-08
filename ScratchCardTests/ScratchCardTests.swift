@@ -8,19 +8,31 @@
 import XCTest
 @testable import ScratchCard
 import Combine
+import CombineExt
 
 final class ScratchCardStoreTests: XCTestCase {
+    private var cancellables = Set<AnyCancellable>()
+    
+    func testInitialState() throws {
+        let sut = AppStateStore()
+        XCTAssertEqual(sut.stateTitle, "Unscratched")
+        XCTAssertTrue(sut.isScratchEnabled)
+        XCTAssertFalse(sut.isActivationEnabled)
+        XCTAssertFalse(sut.isDeactivationEnabled)
+        XCTAssertNil(sut.generatedCode)
+    }
+    
     func testCancelScratching() throws {
         let expectation = expectation(description: "Cancel scratching")
-        let sut = AppStateStore(service: MockPositiveActivationService())
+        let sut = AppStateStore()
         sut.subscribeGenerateCode.accept()
         sut.shouldGenerateCode.accept()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
             XCTAssertEqual(sut.stateTitle, "Unscratched")
-            XCTAssertTrue(sut.isScratchEnabled)
+            XCTAssertFalse(sut.isScratchEnabled)
             XCTAssertFalse(sut.isActivationEnabled)
-            XCTAssertNil(sut.showError)
+            XCTAssertFalse(sut.isDeactivationEnabled)
             sut.cancelGenerateCode.accept()
         }
         
@@ -28,85 +40,131 @@ final class ScratchCardStoreTests: XCTestCase {
             XCTAssertEqual(sut.stateTitle, "Unscratched")
             XCTAssertTrue(sut.isScratchEnabled)
             XCTAssertFalse(sut.isActivationEnabled)
-            XCTAssertNil(sut.showError)
+            XCTAssertFalse(sut.isDeactivationEnabled)
             expectation.fulfill()
         }
                                       
         wait(for: [expectation], timeout: 5)
     }
+    
+    func testScratching() throws {
+        let expectation = expectation(description: "Scratch code")
+        let sut = AppStateStore()
+        sut.subscribeGenerateCode.accept()
+        sut.shouldGenerateCode.accept()
+        sut.$stateTitle
+            .first { $0 == "Scratched" }
+            .delay(for: 0.2, scheduler: RunLoop.current)
+            .sink { _ in
+                XCTAssertFalse(sut.isScratchEnabled)
+                XCTAssertFalse(sut.isDeactivationEnabled)
+                XCTAssertTrue(sut.isActivationEnabled)
+                XCTAssertNotNil(sut.generatedCode)
+                expectation.fulfill()
+            }.store(in: &cancellables)
+        
+        wait(for: [expectation], timeout: 3)
+    }
 
-    func testScratchingAndActivationFailure() throws {
+    func testActivationFailure() throws {
         let expectation = expectation(description: "Activation failure")
-        let sut = AppStateStore(service: MockActivationFailedService())
+        let mockAlertService = MockNotification()
+        let sut = AppStateStore(dataService: MockActivationFailedService(), alertService: mockAlertService)
         sut.subscribeGenerateCode.accept()
         sut.shouldGenerateCode.accept()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
-            XCTAssertEqual(sut.stateTitle, "Unscratched")
-            XCTAssertTrue(sut.isScratchEnabled)
-            XCTAssertFalse(sut.isActivationEnabled)
-            XCTAssertNil(sut.showError)
-        }
+        sut.$stateTitle
+            .first { $0 == "Scratched" }
+            .delay(for: 0.2, scheduler: RunLoop.current)
+            .sink { _ in sut.shouldActivate.accept() }
+            .store(in: &cancellables)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.1) {
-            XCTAssertEqual(sut.stateTitle, "Scratched")
-            XCTAssertFalse(sut.isScratchEnabled)
-            XCTAssertTrue(sut.isActivationEnabled)
-            XCTAssertNil(sut.showError)
-            sut.shouldActivate.accept()
-        }
+        mockAlertService.showAlert
+            .sink {
+                XCTAssertEqual($0, "The operation couldn’t be completed. (test error 111.)")
+                XCTAssertEqual(sut.stateTitle, "Scratched")
+                XCTAssertFalse(sut.isScratchEnabled)
+                XCTAssertTrue(sut.isActivationEnabled)
+                XCTAssertFalse(sut.isDeactivationEnabled)
+                expectation.fulfill()
+            }.store(in: &cancellables)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
-            XCTAssertEqual(sut.stateTitle, "Scratched")
-            XCTAssertFalse(sut.isScratchEnabled)
-            XCTAssertTrue(sut.isActivationEnabled)
-            XCTAssertEqual(sut.showError, "The operation couldn’t be completed. (test error 111.)")
-            expectation.fulfill()
-        }
         wait(for: [expectation], timeout: 5)
     }
     
     func testActivationPositive() throws {
         let expectation = expectation(description: "Activation positive")
-        let sut = AppStateStore(service: MockPositiveActivationService())
+        let sut = AppStateStore(dataService: MockPositiveActivationService())
         sut.subscribeGenerateCode.accept()
         sut.shouldGenerateCode.accept()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
-            sut.shouldActivate.accept()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                XCTAssertEqual(sut.stateTitle, "Activated")
+        sut.$stateTitle
+            .first { $0 == "Scratched" }
+            .delay(for: 0.2, scheduler: RunLoop.current)
+            .sink { _ in sut.shouldActivate.accept() }
+            .store(in: &cancellables)
+        
+        sut.$stateTitle
+            .first { $0 == "Activated" }
+            .delay(for: 0.2, scheduler: RunLoop.current)
+            .sink { _ in
                 XCTAssertFalse(sut.isScratchEnabled)
-                XCTAssertTrue(sut.isActivationEnabled)
-                XCTAssertNil(sut.showError)
+                XCTAssertFalse(sut.isActivationEnabled)
+                XCTAssertTrue(sut.isDeactivationEnabled)
                 expectation.fulfill()
             }
-        }
+            .store(in: &cancellables)
+        
+        wait(for: [expectation], timeout: 5)
+    }
+    
+    func testNotificationRegistration() {
+        let expectation = expectation(description: "Notification registration")
+        let mockAlertService = MockNotification()
+        mockAlertService.register
+            .sink {
+                XCTAssert($0 is AppStateStore)
+                expectation.fulfill()
+            }.store(in: &cancellables)
+        _ = AppStateStore(alertService: mockAlertService)
+        
         wait(for: [expectation], timeout: 3)
     }
     
     func testActivationNegative() throws {
         let expectation = expectation(description: "Activation negative")
-        let sut = AppStateStore(service: MockNegativeActivationService())
+        let mockAlertService = MockNotification()
+        let sut = AppStateStore(dataService: MockNegativeActivationService(), alertService: mockAlertService)
         sut.subscribeGenerateCode.accept()
         sut.shouldGenerateCode.accept()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
-            XCTAssertEqual(sut.stateTitle, "Scratched")
-            XCTAssertFalse(sut.isScratchEnabled)
-            XCTAssertTrue(sut.isActivationEnabled)
-            XCTAssertNil(sut.showError)
-            sut.shouldActivate.accept()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                XCTAssertEqual(sut.stateTitle, "Scratched")
+        sut.$stateTitle
+            .first { $0 == "Scratched" }
+            .delay(for: 0.2, scheduler: RunLoop.current)
+            .sink { _ in sut.shouldActivate.accept() }
+            .store(in: &cancellables)
+        
+        sut.$stateTitle
+            .first { $0 == "Deactivated" }
+            .sink { _ in
                 XCTAssertFalse(sut.isScratchEnabled)
+                XCTAssertFalse(sut.isDeactivationEnabled)
                 XCTAssertTrue(sut.isActivationEnabled)
-                XCTAssertEqual(sut.showError, "Activation was not successful!")
                 expectation.fulfill()
             }
-        }
+            .store(in: &cancellables)
+        
+        mockAlertService.showAlert
+            .sink { XCTAssertEqual($0, "Activation was not successful!") }
+            .store(in: &cancellables)
+        
         wait(for: [expectation], timeout: 3)
     }
+}
+
+class MockNotification: NotificationProtocol {
+    var register = CombineExt.PassthroughRelay<UNUserNotificationCenterDelegate>()
+    var showAlert = CombineExt.PassthroughRelay<String>()
 }
 
 class MockPositiveActivationService: DataServiceProtocol {

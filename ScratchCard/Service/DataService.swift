@@ -43,7 +43,7 @@ final class DataService: DataServiceProtocol {
 //            .decode(type: VersionResponse.self, decoder: JSONDecoder())
 //            .eraseToAnyPublisher()
         return Just(VersionResponse(ios: ["6.1","6.2","5.3","9.4"].randomElement()))
-            .delay(for: 2, scheduler: RunLoop.current)
+            .delay(for: 2, scheduler: DispatchQueue.init(label: "dummy.network.queue", qos: .background))
             .setFailureType(to: Swift.Error.self)
             .eraseToAnyPublisher()
     }
