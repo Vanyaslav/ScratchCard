@@ -8,15 +8,15 @@
 import SwiftUI
 
 extension AppRouter {
-    func navigateActivationView(with text: some View) -> NavigationLink<some View, ActivationView> {
-        .init(destination: .init()) { text }
+    func navigateActivationView(with view: some View) -> NavigationLink<some View, ActivationView> {
+        .init(destination: .init()) { view }
     }
     
-    func navigateScratchView(with text: some View) -> NavigationLink<some View, ScratchCardView> {
-        .init(destination: .init()) { text }
+    func navigateScratchView(with view: some View) -> NavigationLink<some View, ScratchCardView> {
+        .init(destination: .init()) { view }
     }
     
-    func navigateScratchConfirmView(with text: some View) -> NavigationLink<some View, ScratchConfirmView> {
-        .init(destination: .init(router: self)) { text }
+    func navigateScratchConfirmView(with view: some View) -> NavigationLink<some View, ScratchConfirmView> {
+        .init(destination: .init()) { view }
     }
 }

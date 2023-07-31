@@ -69,7 +69,6 @@ final class AppStateStore: NSObject, ObservableObject {
             .share()
         
         state.bind(\.title, to: &$stateTitle)
-        // state.map { $0.title }.assign(to: &$stateTitle)
         state.bind(\.enableScratch, to: &$isScratchEnabled)
         state.bind(\.enableActivation, to: &$isActivationEnabled)
         state.bind(\.generatedCode, to: &$generatedCode)

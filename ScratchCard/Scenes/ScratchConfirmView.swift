@@ -8,12 +8,8 @@
 import SwiftUI
 
 struct ScratchConfirmView: View {
-    private let router: AppRouter
+    @EnvironmentObject private var router: AppRouter
     @Environment(\.dismiss) private var dismiss
-    
-    init(router: AppRouter) {
-        self.router = router
-    }
     
     var body: some View {
         VStack {
@@ -29,7 +25,7 @@ struct ScratchConfirmView: View {
 }
 extension ScratchConfirmView {
     func DescriptionView() -> some View {
-        Text("This page takes you the the scratching generator view. \n \n Would you like to continue?")
+        Text("This page takes you to the scratch generator view. \n \n Would you like to continue?")
             .multilineTextAlignment(.center)
     }
     
@@ -48,6 +44,6 @@ extension ScratchConfirmView {
 
 struct ScratchConfirmView_Previews: PreviewProvider {
     static var previews: some View {
-        ScratchConfirmView(router: AppRouter())
+        ScratchConfirmView()
     }
 }

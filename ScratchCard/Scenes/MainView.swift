@@ -9,12 +9,8 @@ import SwiftUI
 import Resolver
 
 struct MainView: View {
-    private let router: AppRouter
+    @EnvironmentObject private var router: AppRouter
     @InjectedObject private var store: AppStateStore
-    
-    init(router: AppRouter) {
-        self.router = router
-    }
     
     var body: some View {
         NavigationView {
@@ -55,6 +51,6 @@ extension MainView {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(router: AppRouter())
+        MainView()
     }
 }

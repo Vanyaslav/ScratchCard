@@ -15,11 +15,12 @@ protocol RouterProtocol {
 
 extension AppRouter: RouterProtocol {
     func mainView() -> some View {
-        MainView(router: self)
+        MainView()
+            .environmentObject(self)
     }
 }
 
-final class AppRouter {
+final class AppRouter: ObservableObject {
     init() {
         Resolver.registerAllServices()
     }

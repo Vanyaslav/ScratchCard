@@ -22,4 +22,17 @@ final class StoreRetainCycleTests: XCTestCase {
 
         XCTAssertNil(weakStore, "Store should be deallocated")
     }
+    
+    func testRouterDeallocation() {
+        var router: AppRouter? = AppRouter()
+        
+        weak var weakRouter: AppRouter?
+        
+        autoreleasepool {
+            weakRouter = router
+            router = nil
+        }
+
+        XCTAssertNil(weakRouter, "Store should be deallocated")
+    }
 }
