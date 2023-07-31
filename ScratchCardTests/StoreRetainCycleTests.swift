@@ -33,6 +33,6 @@ final class StoreRetainCycleTests: XCTestCase {
             router = nil
         }
 
-        XCTAssertNil(weakRouter, "Store should be deallocated")
+        XCTAssertNil(weakRouter, "Router should be deallocated")
     }
 }
