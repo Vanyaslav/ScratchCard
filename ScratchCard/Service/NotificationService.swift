@@ -21,7 +21,6 @@ class NotificationService: NotificationProtocol {
     let register = PassthroughRelay<UNUserNotificationCenterDelegate>()
     let showAlert = PassthroughRelay<String>()
     
-    
     init() {
         register
             .sink(receiveValue: UNUserNotificationCenter.requestAndDelegate)

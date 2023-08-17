@@ -22,6 +22,7 @@ protocol DataServiceProtocol {
 
 final class DataService: DataServiceProtocol {
     private let urlSession: URLSession
+    private let backgroundQueue = DispatchQueue(label: "dummy.network.queue", qos: .background)
     
     init() {
         let configuration = URLSessionConfiguration.default
@@ -42,9 +43,16 @@ final class DataService: DataServiceProtocol {
 //            .tryMap { $0.data }
 //            .decode(type: VersionResponse.self, decoder: JSONDecoder())
 //            .eraseToAnyPublisher()
-        return Just(VersionResponse(ios: ["6.1","6.2","5.3","9.4"].randomElement()))
-            .delay(for: 2, scheduler: DispatchQueue.init(label: "dummy.network.queue", qos: .background))
+
+//  Data alternative
+        Just(VersionResponse(ios: ["6.1","6.2","5.3","9.4"].randomElement()))
+            .delay(for: 2, scheduler: backgroundQueue)
             .setFailureType(to: Swift.Error.self)
             .eraseToAnyPublisher()
+        
+//  Error alternative
+//        Fail<VersionResponse, Swift.Error>(error: NSError(domain: "Simulated network error", code: 666))
+//            .delay(for: 2, scheduler: backgroundQueue)
+//            .eraseToAnyPublisher()
     }
 }
