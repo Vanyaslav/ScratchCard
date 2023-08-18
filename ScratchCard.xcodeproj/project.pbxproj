@@ -14,12 +14,16 @@
 		A13359152A307E76005BC5F1 /* ScratchCardUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13359142A307E76005BC5F1 /* ScratchCardUITestsLaunchTests.swift */; };
 		A133591C2A308CF1005BC5F1 /* ScratchConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A133591B2A308CF1005BC5F1 /* ScratchConfirmView.swift */; };
 		A13916062A07CBBC00BCAE31 /* ScratchCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */; };
+		A15CD4762A8F51930084C20C /* ScratchCardStoreTests+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CD4752A8F51930084C20C /* ScratchCardStoreTests+Mocks.swift */; };
+		A15CD4782A8F53BF0084C20C /* ScratchCardStoreTests+Initial.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CD4772A8F53BF0084C20C /* ScratchCardStoreTests+Initial.swift */; };
+		A15CD47B2A8F5CF30084C20C /* ScratchCardStoreTests+Scratch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CD47A2A8F5CF30084C20C /* ScratchCardStoreTests+Scratch.swift */; };
+		A15CD47D2A8F60010084C20C /* ScratchCardStoreTests+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CD47C2A8F60010084C20C /* ScratchCardStoreTests+Notification.swift */; };
 		A16CEEEB2A14D5F700547B5D /* AppStateStore+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */; };
 		A19D80952A06EA9A00AE46A5 /* ScratchCardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80942A06EA9A00AE46A5 /* ScratchCardApp.swift */; };
 		A19D80972A06EA9A00AE46A5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80962A06EA9A00AE46A5 /* MainView.swift */; };
 		A19D80992A06EA9D00AE46A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A19D80982A06EA9D00AE46A5 /* Assets.xcassets */; };
 		A19D809C2A06EA9D00AE46A5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A19D809B2A06EA9D00AE46A5 /* Preview Assets.xcassets */; };
-		A19D80A62A06EA9E00AE46A5 /* ScratchCardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80A52A06EA9E00AE46A5 /* ScratchCardTests.swift */; };
+		A19D80A62A06EA9E00AE46A5 /* ScratchCardStoreTests+Activation+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80A52A06EA9E00AE46A5 /* ScratchCardStoreTests+Activation+Error.swift */; };
 		A19D80C02A06EEB200AE46A5 /* Text+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80BF2A06EEB200AE46A5 /* Text+Format.swift */; };
 		A19D80C42A06EF7600AE46A5 /* AppStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80C32A06EF7600AE46A5 /* AppStateStore.swift */; };
 		A19D80C72A06F65400AE46A5 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19D80C62A06F65400AE46A5 /* DataService.swift */; };
@@ -31,6 +35,9 @@
 		A1ABD5A62A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */; };
 		A1D477A22A2C63C100EC6801 /* AppRouter+Navigate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D477A12A2C63C100EC6801 /* AppRouter+Navigate.swift */; };
 		A1F007372A07CF47006BC5E7 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = A1F007362A07CF47006BC5E7 /* Resolver */; };
+		A1F0B1832A8F64800055E4D7 /* ScratchCardStoreTests+Notification+NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0B1822A8F64800055E4D7 /* ScratchCardStoreTests+Notification+NetworkError.swift */; };
+		A1F0B1852A8FAF450055E4D7 /* ScratchCardStoreTests+Activation+Positive.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0B1842A8FAF450055E4D7 /* ScratchCardStoreTests+Activation+Positive.swift */; };
+		A1F0B1872A8FB1280055E4D7 /* ScratchCardStoreTests+Activation+Negative.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F0B1862A8FB1280055E4D7 /* ScratchCardStoreTests+Activation+Negative.swift */; };
 		A1F7C3FD2A29E8AD00B9FAE7 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F7C3FC2A29E8AD00B9FAE7 /* AppRouter.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +67,10 @@
 		A13359142A307E76005BC5F1 /* ScratchCardUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A133591B2A308CF1005BC5F1 /* ScratchConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchConfirmView.swift; sourceTree = "<group>"; };
 		A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardView.swift; sourceTree = "<group>"; };
+		A15CD4752A8F51930084C20C /* ScratchCardStoreTests+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Mocks.swift"; sourceTree = "<group>"; };
+		A15CD4772A8F53BF0084C20C /* ScratchCardStoreTests+Initial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Initial.swift"; sourceTree = "<group>"; };
+		A15CD47A2A8F5CF30084C20C /* ScratchCardStoreTests+Scratch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Scratch.swift"; sourceTree = "<group>"; };
+		A15CD47C2A8F60010084C20C /* ScratchCardStoreTests+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Notification.swift"; sourceTree = "<group>"; };
 		A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStateStore+State.swift"; sourceTree = "<group>"; };
 		A19D80912A06EA9A00AE46A5 /* ScratchCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScratchCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19D80942A06EA9A00AE46A5 /* ScratchCardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardApp.swift; sourceTree = "<group>"; };
@@ -67,7 +78,7 @@
 		A19D80982A06EA9D00AE46A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A19D809B2A06EA9D00AE46A5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A19D80A12A06EA9E00AE46A5 /* ScratchCardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScratchCardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A19D80A52A06EA9E00AE46A5 /* ScratchCardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardTests.swift; sourceTree = "<group>"; };
+		A19D80A52A06EA9E00AE46A5 /* ScratchCardStoreTests+Activation+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Activation+Error.swift"; sourceTree = "<group>"; };
 		A19D80BF2A06EEB200AE46A5 /* Text+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Format.swift"; sourceTree = "<group>"; };
 		A19D80C32A06EF7600AE46A5 /* AppStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateStore.swift; sourceTree = "<group>"; };
 		A19D80C62A06F65400AE46A5 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
@@ -77,6 +88,9 @@
 		A1ABD5A32A0ADB0F00CD96F4 /* UNUserNotificationCenter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Ext.swift"; sourceTree = "<group>"; };
 		A1ABD5A52A0ADB7400CD96F4 /* AppStateStore+UNUserNotificationCenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStateStore+UNUserNotificationCenterDelegate.swift"; sourceTree = "<group>"; };
 		A1D477A12A2C63C100EC6801 /* AppRouter+Navigate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRouter+Navigate.swift"; sourceTree = "<group>"; };
+		A1F0B1822A8F64800055E4D7 /* ScratchCardStoreTests+Notification+NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Notification+NetworkError.swift"; sourceTree = "<group>"; };
+		A1F0B1842A8FAF450055E4D7 /* ScratchCardStoreTests+Activation+Positive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Activation+Positive.swift"; sourceTree = "<group>"; };
+		A1F0B1862A8FB1280055E4D7 /* ScratchCardStoreTests+Activation+Negative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Activation+Negative.swift"; sourceTree = "<group>"; };
 		A1F7C3FA2A29D05200B9FAE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1F7C3FC2A29E8AD00B9FAE7 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +129,29 @@
 				A13359142A307E76005BC5F1 /* ScratchCardUITestsLaunchTests.swift */,
 			);
 			path = ScratchCardUITests;
+			sourceTree = "<group>";
+		};
+		A15CD4742A8F517F0084C20C /* ScratchCardStoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				A15CD4792A8F556C0084C20C /* Support */,
+				A15CD4772A8F53BF0084C20C /* ScratchCardStoreTests+Initial.swift */,
+				A15CD47A2A8F5CF30084C20C /* ScratchCardStoreTests+Scratch.swift */,
+				A15CD47C2A8F60010084C20C /* ScratchCardStoreTests+Notification.swift */,
+				A1F0B1822A8F64800055E4D7 /* ScratchCardStoreTests+Notification+NetworkError.swift */,
+				A1F0B1842A8FAF450055E4D7 /* ScratchCardStoreTests+Activation+Positive.swift */,
+				A1F0B1862A8FB1280055E4D7 /* ScratchCardStoreTests+Activation+Negative.swift */,
+				A19D80A52A06EA9E00AE46A5 /* ScratchCardStoreTests+Activation+Error.swift */,
+			);
+			path = ScratchCardStoreTests;
+			sourceTree = "<group>";
+		};
+		A15CD4792A8F556C0084C20C /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				A15CD4752A8F51930084C20C /* ScratchCardStoreTests+Mocks.swift */,
+			);
+			path = Support;
 			sourceTree = "<group>";
 		};
 		A19D80882A06EA9A00AE46A5 = {
@@ -163,7 +200,7 @@
 		A19D80A42A06EA9E00AE46A5 /* ScratchCardTests */ = {
 			isa = PBXGroup;
 			children = (
-				A19D80A52A06EA9E00AE46A5 /* ScratchCardTests.swift */,
+				A15CD4742A8F517F0084C20C /* ScratchCardStoreTests */,
 				A1A4D13E2A35A89700A77C95 /* StoreRetainCycleTests.swift */,
 			);
 			path = ScratchCardTests;
@@ -400,8 +437,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A19D80A62A06EA9E00AE46A5 /* ScratchCardTests.swift in Sources */,
+				A19D80A62A06EA9E00AE46A5 /* ScratchCardStoreTests+Activation+Error.swift in Sources */,
+				A1F0B1832A8F64800055E4D7 /* ScratchCardStoreTests+Notification+NetworkError.swift in Sources */,
+				A15CD47B2A8F5CF30084C20C /* ScratchCardStoreTests+Scratch.swift in Sources */,
+				A15CD4782A8F53BF0084C20C /* ScratchCardStoreTests+Initial.swift in Sources */,
+				A15CD4762A8F51930084C20C /* ScratchCardStoreTests+Mocks.swift in Sources */,
 				A1A4D13F2A35A89700A77C95 /* StoreRetainCycleTests.swift in Sources */,
+				A15CD47D2A8F60010084C20C /* ScratchCardStoreTests+Notification.swift in Sources */,
+				A1F0B1872A8FB1280055E4D7 /* ScratchCardStoreTests+Activation+Negative.swift in Sources */,
+				A1F0B1852A8FAF450055E4D7 /* ScratchCardStoreTests+Activation+Positive.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
