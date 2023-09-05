@@ -80,8 +80,7 @@ final class AppStateStore: NSObject, ObservableObject {
             .store(in: &cancellables)
         
         subscribeGenerateCode
-            .sink { [weak self] in
-                guard let self else { return }
+            .sink { _ in
                 self.generateCodeAction = self.shouldGenerateCode
                     .delay(for: self.simulateScratchTime,
                            scheduler: RunLoop.current)
@@ -89,7 +88,7 @@ final class AppStateStore: NSObject, ObservableObject {
             }.store(in: &cancellables)
         
         cancelGenerateCode
-            .sink { [weak self] in self?.generateCodeAction?.cancel() }
+            .sink { _ in self.generateCodeAction?.cancel() }
             .store(in: &cancellables)
     }
 }
