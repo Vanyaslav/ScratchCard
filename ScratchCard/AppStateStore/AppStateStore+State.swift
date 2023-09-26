@@ -9,6 +9,10 @@ import Foundation
 import CombineExt
 
 extension AppStateStore.State {
+    static let acceptedVersionThreshold: Decimal = 6.1
+}
+
+extension AppStateStore.State {
     enum Action {
         case generateCode(id: Void),
              startGenerateCode(id: Void),
@@ -25,8 +29,7 @@ extension AppStateStore {
                 title = activationState.title
                 
                 switch activationState {
-                case .unscratched:
-                    break
+                case .unscratched: ()
                     
                 case .scratched:
                     generatedCode = UUID().uuidString
@@ -88,7 +91,7 @@ extension AppStateStore.State {
             switch response {
             case .value(let data):
                 if let version = data.ios,
-                   Decimal(string: version) ?? 0 > 6.1 {
+                   Decimal(string: version) ?? 0 > Self.acceptedVersionThreshold {
                     state.activationState = .activated
                 } else {
                     state.manageDeactivation("Activation was not successful!")
