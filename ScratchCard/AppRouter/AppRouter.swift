@@ -20,11 +20,7 @@ extension AppRouter: RouterProtocol {
     }
 }
 
-final class AppRouter: ObservableObject {
-    init() {
-        Resolver.registerAllServices()
-    }
-}
+final class AppRouter: ObservableObject {}
 
 extension Resolver: ResolverRegistering {
     public static func registerAllServices() {
