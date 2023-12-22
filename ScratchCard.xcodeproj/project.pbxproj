@@ -71,6 +71,7 @@
 		A15CD47A2A8F5CF30084C20C /* ScratchCardStoreTests+Scratch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Scratch.swift"; sourceTree = "<group>"; };
 		A15CD47C2A8F60010084C20C /* ScratchCardStoreTests+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Notification.swift"; sourceTree = "<group>"; };
 		A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStateStore+State.swift"; sourceTree = "<group>"; };
+		A188365B2B36230F003982B4 /* ScratchCard.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = ScratchCard.xctestplan; sourceTree = "<group>"; };
 		A19D80912A06EA9A00AE46A5 /* ScratchCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScratchCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19D80942A06EA9A00AE46A5 /* ScratchCardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardApp.swift; sourceTree = "<group>"; };
 		A19D80962A06EA9A00AE46A5 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -155,6 +156,7 @@
 		A19D80882A06EA9A00AE46A5 = {
 			isa = PBXGroup;
 			children = (
+				A188365B2B36230F003982B4 /* ScratchCard.xctestplan */,
 				A19D80932A06EA9A00AE46A5 /* ScratchCard */,
 				A19D80A42A06EA9E00AE46A5 /* ScratchCardTests */,
 				A13359112A307E76005BC5F1 /* ScratchCardUITests */,
