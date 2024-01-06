@@ -10,20 +10,21 @@ import CombineExt
 
 extension AppStateStore.State {
     static let acceptedVersionThreshold: Decimal = 6.1
-}
-
-extension AppStateStore.State {
-    enum Action {
-        case generateCode(id: Void),
-             startGenerateCode(id: Void),
-             cancelGenerateCode(id: Void),
-             process(_ response: Event<VersionResponse, Swift.Error>),
-             deactivate(id: Void)
+    
+    var isScratched: Bool {
+        activationState != .unscratched
     }
 }
 
 extension AppStateStore {
-    struct State {
+    struct ErrorResponse: Equatable {
+        let count: Int
+        let message: String
+    }
+}
+
+extension AppStateStore {
+    struct State: Equatable {
         private var activationState: CodeActivationState {
             didSet {
                 title = activationState.title
@@ -72,7 +73,7 @@ extension AppStateStore.State {
 }
 
 extension AppStateStore.State {
-    func apply(_ action: Action) -> Self {
+    func apply(_ action: AppStateStore.Action) -> Self {
         var state = self
         switch action {
         case .generateCode:
@@ -103,6 +104,9 @@ extension AppStateStore.State {
             case .finished:
                 break
             }
+            
+        case .shouldActivate, .subscribeGenerateCode:
+            break
         }
         return state
     }
@@ -118,9 +122,4 @@ extension AppStateStore.State {
         errorResponse = .init(count: (errorResponse?.count ?? 0) + 1,
                               message: message)
     }
-}
-
-struct ErrorResponse: Equatable {
-    let count: Int
-    let message: String
 }

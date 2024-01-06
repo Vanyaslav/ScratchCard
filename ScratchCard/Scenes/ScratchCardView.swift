@@ -8,12 +8,15 @@
 import SwiftUI
 import Resolver
 
-struct ScratchCardView: View {
-    @InjectedObject private var store: AppStateStore
+protocol ScratchCard: View {}
+
+struct ScratchCardView: ScratchCard {
+    @InjectedObject 
+    private var store: AppStateStore
     
     var body: some View {
         VStack {
-            if let code = store.generatedCode {
+            if let code = store.state.generatedCode {
                 CodeView(code)
             }
             Spacer()
@@ -21,10 +24,10 @@ struct ScratchCardView: View {
         }
         .padding()
         .onAppear() {
-            store.subscribeGenerateCode.accept()
+            store.send.accept(.subscribeGenerateCode)
         }
         .onDisappear() {
-            store.cancelGenerateCode.accept()
+            store.send.accept(.cancelGenerateCode)
         }
     }
 }
@@ -39,10 +42,10 @@ extension ScratchCardView {
     }
     
     func AcceptButton() -> some View {
-        Button { store.shouldGenerateCode.accept() } label: {
+        Button { store.send.accept(.startGenerateCode) } label: {
             Text("Scratch the card")
                 .formatButtonText()
-        }.enabled(store.isScratchEnabled)
+        }.enabled(store.state.enableScratch)
     }
 }
 

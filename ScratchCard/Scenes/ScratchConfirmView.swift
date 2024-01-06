@@ -7,9 +7,12 @@
 
 import SwiftUI
 
-struct ScratchConfirmView: View {
-    @EnvironmentObject private var router: AppRouter
-    @Environment(\.dismiss) private var dismiss
+struct ScratchConfirmView: ScratchCard {
+    @EnvironmentObject 
+    private var router: AppRouter
+    
+    @Environment(\.dismiss)
+    private var dismiss
     
     var body: some View {
         VStack {

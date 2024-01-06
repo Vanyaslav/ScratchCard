@@ -20,7 +20,10 @@ extension AppRouter: RouterProtocol {
     }
 }
 
-final class AppRouter: ObservableObject {}
+final class AppRouter: ObservableObject {
+    @InjectedObject
+    private(set) var store: AppStateStore
+}
 
 extension Resolver: ResolverRegistering {
     public static func registerAllServices() {

@@ -9,8 +9,11 @@ import SwiftUI
 import Resolver
 
 struct MainView: View {
-    @EnvironmentObject private var router: AppRouter
-    @InjectedObject private var store: AppStateStore
+    @EnvironmentObject 
+    private var router: AppRouter
+    
+    @InjectedObject 
+    private var store: AppStateStore
     
     var body: some View {
         NavigationView {
@@ -18,7 +21,11 @@ struct MainView: View {
                 MainTitle()
                 DeactivationButton()
                 Spacer()
-                router.navigateScratchConfirmView(with: ScratchButton())
+                if store.state.isScratched {
+                    router.navigateScratchView(with: ScratchButton())
+                } else {
+                    router.navigateScratchConfirmView(with: ScratchButton())
+                }
                 router.navigateActivationView(with: ActivationButton())
             }.padding()
         }
@@ -27,7 +34,7 @@ struct MainView: View {
 
 extension MainView {
     func MainTitle() -> some View {
-        Text(store.stateTitle)
+        Text(store.state.title)
             .formatStateText()
     }
     
@@ -44,8 +51,8 @@ extension MainView {
     func DeactivationButton() -> some View {
         Text("Deactivate")
             .formatButtonText()
-            .onTapGesture { store.shouldDeactivate.accept() }
-            .enabled(store.isDeactivationEnabled)
+            .onTapGesture { store.send.accept(.deactivate) }
+            .enabled(store.state.enableDeactivation)
     }
 }
 

@@ -26,24 +26,24 @@ class ScratchCardStoreTestsScratch: XCTestCase {
     
     func testCancelScratching() throws {
         let expectation = expectation(description: "Cancel scratching")
-        sut.subscribeGenerateCode.accept()
-        sut.shouldGenerateCode.accept()
+        sut.send.accept(.subscribeGenerateCode)
+        sut.send.accept(.startGenerateCode)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
             guard let sut = self.sut else { return }
-            XCTAssertEqual(sut.stateTitle, "Unscratched")
-            XCTAssertFalse(sut.isScratchEnabled)
-            XCTAssertFalse(sut.isActivationEnabled)
-            XCTAssertFalse(sut.isDeactivationEnabled)
-            sut.cancelGenerateCode.accept()
+            XCTAssertEqual(sut.state.title, "Unscratched")
+            XCTAssertFalse(sut.state.enableScratch)
+            XCTAssertFalse(sut.state.enableActivation)
+            XCTAssertFalse(sut.state.enableDeactivation)
+            sut.send.accept(.cancelGenerateCode)
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             guard let sut = self.sut else { return }
-            XCTAssertEqual(sut.stateTitle, "Unscratched")
-            XCTAssertTrue(sut.isScratchEnabled)
-            XCTAssertFalse(sut.isActivationEnabled)
-            XCTAssertFalse(sut.isDeactivationEnabled)
+            XCTAssertEqual(sut.state.title, "Unscratched")
+            XCTAssertTrue(sut.state.enableScratch)
+            XCTAssertFalse(sut.state.enableActivation)
+            XCTAssertFalse(sut.state.enableDeactivation)
             expectation.fulfill()
         }
                                       
@@ -52,17 +52,17 @@ class ScratchCardStoreTestsScratch: XCTestCase {
     
     func testScratching() throws {
         let expectation = expectation(description: "Scratch code")
-        sut.subscribeGenerateCode.accept()
-        sut.shouldGenerateCode.accept()
-        sut.$stateTitle
-            .first { $0 == "Scratched" }
+        sut.send.accept(.subscribeGenerateCode)
+        sut.send.accept(.startGenerateCode)
+        sut.$state
+            .first { $0.title == "Scratched" }
             .delay(for: 0.2, scheduler: RunLoop.current)
             .sink { _ in
                 guard let sut = self.sut else { return }
-                XCTAssertFalse(sut.isScratchEnabled)
-                XCTAssertFalse(sut.isDeactivationEnabled)
-                XCTAssertTrue(sut.isActivationEnabled)
-                XCTAssertNotNil(sut.generatedCode)
+                XCTAssertFalse(sut.state.enableScratch)
+                XCTAssertFalse(sut.state.enableDeactivation)
+                XCTAssertTrue(sut.state.enableActivation)
+                XCTAssertNotNil(sut.state.generatedCode)
                 expectation.fulfill()
             }.store(in: &cancellables)
         

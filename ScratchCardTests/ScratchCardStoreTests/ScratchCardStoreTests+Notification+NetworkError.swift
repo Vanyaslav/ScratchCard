@@ -28,15 +28,15 @@ class ScratchCardStoreTestsNotificationNetworkError: XCTestCase {
     
     func testTriggeredNotificationNetworkError() throws {
         let expectation = expectation(description: "Notification triggering - network error")
-        sut.subscribeGenerateCode.accept()
-        sut.shouldGenerateCode.accept()
-        
-        sut.$stateTitle
-            .first { $0 == "Scratched" }
+        sut.send.accept(.generateCode) 
+        // when
+        sut.$state
+            .first { $0.title == "Scratched" }
             .delay(for: 0.2, scheduler: RunLoop.current)
-            .sink { _ in self.sut.shouldActivate.accept() }
+            .map { _ in .shouldActivate }
+            .sink(receiveValue: sut.send.accept)
             .store(in: &cancellables)
-        
+        // then
         mockAlertService.showAlert
             .sink {
                 XCTAssertEqual($0, "The operation couldn’t be completed. (test error 111.)")

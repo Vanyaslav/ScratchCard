@@ -30,22 +30,21 @@ class ScratchCardStoreTestsActivationError: XCTestCase {
 
     func testActivationFailure() throws {
         let expectation = expectation(description: "Activation error")
-        sut.subscribeGenerateCode.accept()
-        sut.shouldGenerateCode.accept()
+        sut.send.accept(.generateCode)
         
-        sut.$stateTitle
-            .first { $0 == "Scratched" }
+        sut.$state
+            .first { $0.title == "Scratched" }
             .delay(for: 0.2, scheduler: RunLoop.current)
-            .sink { _ in self.sut.shouldActivate.accept() }
+            .sink { _ in self.sut.send.accept(.shouldActivate) }
             .store(in: &cancellables)
         
         mockAlertService.showAlert
             .sink { _ in
                 guard let sut = self.sut else { return }
-                XCTAssertEqual(sut.stateTitle, "Scratched")
-                XCTAssertFalse(sut.isScratchEnabled)
-                XCTAssertTrue(sut.isActivationEnabled)
-                XCTAssertFalse(sut.isDeactivationEnabled)
+                XCTAssertEqual(sut.state.title, "Scratched")
+                XCTAssertFalse(sut.state.enableScratch)
+                XCTAssertTrue(sut.state.enableActivation)
+                XCTAssertFalse(sut.state.enableDeactivation)
                 expectation.fulfill()
             }.store(in: &cancellables)
         

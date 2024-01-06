@@ -10,8 +10,6 @@ import SwiftUI
 extension View {
     func enabled(_ isEnabled: Bool) -> some View {
         disabled(!isEnabled)
-            .opacity(isEnabled
-                     ? 1
-                     : 0.3)
+            .opacity(isEnabled ? 1 : 0.3)
     }
 }

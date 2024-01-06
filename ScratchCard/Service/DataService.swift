@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-struct VersionResponse: Decodable {
+struct VersionResponse: Decodable, Equatable {
     let ios: String?
 }
 

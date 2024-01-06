@@ -25,10 +25,10 @@ class ScratchCardStoreTestsInitial: XCTestCase {
     }
     
     func testInitialState() throws {
-        XCTAssertEqual(sut.stateTitle, "Unscratched")
-        XCTAssertTrue(sut.isScratchEnabled)
-        XCTAssertFalse(sut.isActivationEnabled)
-        XCTAssertFalse(sut.isDeactivationEnabled)
-        XCTAssertNil(sut.generatedCode)
+        XCTAssertEqual(sut.state.title, "Unscratched")
+        XCTAssertTrue(sut.state.enableScratch)
+        XCTAssertFalse(sut.state.enableActivation)
+        XCTAssertFalse(sut.state.enableDeactivation)
+        XCTAssertNil(sut.state.generatedCode)
     }
 }
