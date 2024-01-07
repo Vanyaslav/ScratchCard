@@ -27,7 +27,8 @@ class NotificationService: NotificationProtocol {
             .store(in: &cancellables)
         
         showAlert
-            .sink { UNUserNotificationCenter.sendNotification(subTitle: $0) }
+            .map { UNUserNotificationCenter.sendNotification(subTitle: $0) }
+            .sink { _ in  }
             .store(in: &cancellables)
     }
 }
