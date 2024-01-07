@@ -40,14 +40,7 @@ class ScratchCardStoreTestsNotification: XCTestCase {
     
     func testTriggeredNotificationNegative() throws {
         let expectation = expectation(description: "Notification triggering - negative response")
-        sut.send.accept(.generateCode)
-        
-        sut.$state
-            .first { $0.title == "Scratched" }
-            .delay(for: 0.2, scheduler: RunLoop.current)
-            .map { _ in .shouldActivate }
-            .sink(receiveValue: sut.send.accept)
-            .store(in: &cancellables)
+        sut.simulateActivation(in: &cancellables)
         
         mockAlertService.showAlert
             .sink { XCTAssertEqual($0, "Activation was not successful!") }

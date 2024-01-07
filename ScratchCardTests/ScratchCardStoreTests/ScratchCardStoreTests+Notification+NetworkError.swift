@@ -28,14 +28,8 @@ class ScratchCardStoreTestsNotificationNetworkError: XCTestCase {
     
     func testTriggeredNotificationNetworkError() throws {
         let expectation = expectation(description: "Notification triggering - network error")
-        sut.send.accept(.generateCode) 
         // when
-        sut.$state
-            .first { $0.title == "Scratched" }
-            .delay(for: 0.2, scheduler: RunLoop.current)
-            .map { _ in .shouldActivate }
-            .sink(receiveValue: sut.send.accept)
-            .store(in: &cancellables)
+        sut.simulateActivation(in: &cancellables)
         // then
         mockAlertService.showAlert
             .sink {

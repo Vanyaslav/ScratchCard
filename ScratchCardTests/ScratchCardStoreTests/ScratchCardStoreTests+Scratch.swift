@@ -9,6 +9,7 @@ import XCTest
 @testable import ScratchCard
 import Combine
 
+
 class ScratchCardStoreTestsScratch: XCTestCase {
     var cancellables = Set<AnyCancellable>()
     var sut: AppStateStore!
@@ -22,6 +23,14 @@ class ScratchCardStoreTestsScratch: XCTestCase {
         sut = nil
         cancellables.removeAll()
         super.tearDown()
+    }
+    
+    func testInitialState() throws {
+        XCTAssertEqual(sut.state.title, "Unscratched")
+        XCTAssertTrue(sut.state.enableScratch)
+        XCTAssertFalse(sut.state.enableActivation)
+        XCTAssertFalse(sut.state.enableDeactivation)
+        XCTAssertNil(sut.state.generatedCode)
     }
     
     func testCancelScratching() throws {

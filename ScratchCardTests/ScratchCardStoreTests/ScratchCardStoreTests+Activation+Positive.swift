@@ -9,6 +9,18 @@ import XCTest
 @testable import ScratchCard
 import Combine
 
+extension AppStateStore {
+    func simulateActivation(in cancellables: inout Set<AnyCancellable>) {
+        send.accept(.generateCode)
+        $state
+            .first { $0.title == "Scratched" }
+            .delay(for: 0.2, scheduler: RunLoop.current)
+            .map { _ in .shouldActivate }
+            .sink(receiveValue: send.accept)
+            .store(in: &cancellables)
+    }
+}
+
 class ScratchCardStoreTestsActivationPositive: XCTestCase {
     var cancellables = Set<AnyCancellable>()
     var sut: AppStateStore!
@@ -26,13 +38,8 @@ class ScratchCardStoreTestsActivationPositive: XCTestCase {
     
     func testActivationPositive() throws {
         let expectation = expectation(description: "Activation positive")
-        sut.send.accept(.generateCode) 
-        
-        sut.$state
-            .first { $0.title == "Scratched" }
-            .delay(for: 0.2, scheduler: RunLoop.current)
-            .sink { _ in self.sut.send.accept(.shouldActivate) }
-            .store(in: &cancellables)
+
+        sut.simulateActivation(in: &cancellables)
         
         sut.$state
             .first { $0.title == "Activated" }

@@ -28,21 +28,16 @@ class ScratchCardStoreTestsActivationNegative: XCTestCase {
     
     func testActivationNegative() throws {
         let expectation = expectation(description: "Activation negative")
-        sut.send.accept(.generateCode) 
         
-        sut.$state
-            .first { $0.title == "Scratched" }
-            .delay(for: 0.2, scheduler: RunLoop.current)
-            .sink { _ in self.sut.send.accept(.shouldActivate) }
-            .store(in: &cancellables)
+        sut.simulateActivation(in: &cancellables)
         
         sut.$state
             .first { $0.title == "Deactivated" }
             .sink { _ in
                 guard let sut = self.sut else { return }
                 XCTAssertFalse(sut.state.enableScratch)
-                XCTAssertFalse(sut.state.enableDeactivation)
                 XCTAssertTrue(sut.state.enableActivation)
+                XCTAssertFalse(sut.state.enableDeactivation)
                 expectation.fulfill()
             }
             .store(in: &cancellables)

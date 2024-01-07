@@ -15,7 +15,6 @@
 		A133591C2A308CF1005BC5F1 /* ScratchConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A133591B2A308CF1005BC5F1 /* ScratchConfirmView.swift */; };
 		A13916062A07CBBC00BCAE31 /* ScratchCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */; };
 		A15CD4762A8F51930084C20C /* ScratchCardStoreTests+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CD4752A8F51930084C20C /* ScratchCardStoreTests+Mocks.swift */; };
-		A15CD4782A8F53BF0084C20C /* ScratchCardStoreTests+Initial.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CD4772A8F53BF0084C20C /* ScratchCardStoreTests+Initial.swift */; };
 		A15CD47B2A8F5CF30084C20C /* ScratchCardStoreTests+Scratch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CD47A2A8F5CF30084C20C /* ScratchCardStoreTests+Scratch.swift */; };
 		A15CD47D2A8F60010084C20C /* ScratchCardStoreTests+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15CD47C2A8F60010084C20C /* ScratchCardStoreTests+Notification.swift */; };
 		A16CEEEB2A14D5F700547B5D /* AppStateStore+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */; };
@@ -68,7 +67,6 @@
 		A133591B2A308CF1005BC5F1 /* ScratchConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchConfirmView.swift; sourceTree = "<group>"; };
 		A13916052A07CBBC00BCAE31 /* ScratchCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScratchCardView.swift; sourceTree = "<group>"; };
 		A15CD4752A8F51930084C20C /* ScratchCardStoreTests+Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Mocks.swift"; sourceTree = "<group>"; };
-		A15CD4772A8F53BF0084C20C /* ScratchCardStoreTests+Initial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Initial.swift"; sourceTree = "<group>"; };
 		A15CD47A2A8F5CF30084C20C /* ScratchCardStoreTests+Scratch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Scratch.swift"; sourceTree = "<group>"; };
 		A15CD47C2A8F60010084C20C /* ScratchCardStoreTests+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScratchCardStoreTests+Notification.swift"; sourceTree = "<group>"; };
 		A16CEEEA2A14D5F700547B5D /* AppStateStore+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStateStore+State.swift"; sourceTree = "<group>"; };
@@ -136,7 +134,6 @@
 			isa = PBXGroup;
 			children = (
 				A15CD4792A8F556C0084C20C /* Support */,
-				A15CD4772A8F53BF0084C20C /* ScratchCardStoreTests+Initial.swift */,
 				A15CD47A2A8F5CF30084C20C /* ScratchCardStoreTests+Scratch.swift */,
 				A15CD47C2A8F60010084C20C /* ScratchCardStoreTests+Notification.swift */,
 				A1F0B1822A8F64800055E4D7 /* ScratchCardStoreTests+Notification+NetworkError.swift */,
@@ -443,7 +440,6 @@
 				A19D80A62A06EA9E00AE46A5 /* ScratchCardStoreTests+Activation+Error.swift in Sources */,
 				A1F0B1832A8F64800055E4D7 /* ScratchCardStoreTests+Notification+NetworkError.swift in Sources */,
 				A15CD47B2A8F5CF30084C20C /* ScratchCardStoreTests+Scratch.swift in Sources */,
-				A15CD4782A8F53BF0084C20C /* ScratchCardStoreTests+Initial.swift in Sources */,
 				A15CD4762A8F51930084C20C /* ScratchCardStoreTests+Mocks.swift in Sources */,
 				A15CD47D2A8F60010084C20C /* ScratchCardStoreTests+Notification.swift in Sources */,
 				A1F0B1872A8FB1280055E4D7 /* ScratchCardStoreTests+Activation+Negative.swift in Sources */,
