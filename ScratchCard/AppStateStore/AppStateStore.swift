@@ -16,7 +16,7 @@ extension AppStateStore {
 }
 
 extension PassthroughRelay {
-    func filter(_ action: AppStateStore.Action) -> AnyPublisher<(), Never> {
+    func focus(on action: AppStateStore.Action) -> AnyPublisher<(), Never> {
         filter { $0 as? AppStateStore.Action == action }
             .mapToVoid()
             .eraseToAnyPublisher()
@@ -41,7 +41,7 @@ final class AppStateStore: NSObject, ObservableObject {
         
         alertService.register.accept(self)
         
-        let activationResult = send.filter(.shouldActivate)
+        let activationResult = send.focus(on: .shouldActivate)
             .withLatestFrom($state)
             .compactMap { $0.generatedCode }
             .flatMapLatest { dataService.activate(with: $0).materialize() }
@@ -52,7 +52,7 @@ final class AppStateStore: NSObject, ObservableObject {
             send
         )
             .receive(on: DispatchQueue.main)
-            .scan(initialState) { $0.apply($1) }
+            .scan(state) { $0.apply($1) }
             .removeDuplicates()
             .share()
         
@@ -65,21 +65,26 @@ final class AppStateStore: NSObject, ObservableObject {
             .sink(receiveValue: alertService.showAlert.accept)
             .store(in: &cancellables)
         
-        send.filter(.subscribeGenerateCode)
+        send.focus(on: .subscribeGenerateCode)
             .sink(receiveValue: subscribeDelayedScratchingAction)
             .store(in: &cancellables)
 
-        send.filter(.cancelGenerateCode)
-            .sink { _ in self.generateCodeAction?.cancel() }
+        send.focus(on: .cancelGenerateCode)
+            .sink(receiveValue: cancelDelayedScratchingAction)
             .store(in: &cancellables)
     }
 }
 
 extension AppStateStore {
     private func subscribeDelayedScratchingAction() {
-        generateCodeAction = send.filter(.startGenerateCode)
+        generateCodeAction = send.focus(on: .startGenerateCode)
             .delay(for: simulateScratchTime, scheduler: RunLoop.current)
             .map { .generateCode }
             .sink(receiveValue: send.accept)
+    }
+    
+    private func cancelDelayedScratchingAction() {
+        generateCodeAction?.cancel()
+        generateCodeAction = nil
     }
 }
