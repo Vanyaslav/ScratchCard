@@ -21,7 +21,7 @@ extension AppStateStore {
     }
 }
 
-class ScratchCardStoreTestsActivationPositive: XCTestCase {
+class ScratchCardStoreTestsActivation: XCTestCase {
     var cancellables = Set<AnyCancellable>()
     var sut: AppStateStore!
     var mockAlertService: NotificationProtocol!
@@ -39,7 +39,7 @@ class ScratchCardStoreTestsActivationPositive: XCTestCase {
     }
     
     func testActivationPositive() throws {
-        let expectation = expectation(description: "Activation positive")
+        let expectation = expectation(description: #function)
 
         sut = AppStateStore(dataService: MockPositiveActivationService())
         
@@ -61,7 +61,7 @@ class ScratchCardStoreTestsActivationPositive: XCTestCase {
     }
     
     func testActivationNegative() throws {
-        let expectation = expectation(description: "Activation negative")
+        let expectation = expectation(description: #function)
         
         sut = AppStateStore(dataService: MockNegativeActivationService(), alertService: mockAlertService)
         
@@ -82,7 +82,7 @@ class ScratchCardStoreTestsActivationPositive: XCTestCase {
     }
     
     func testActivationFailure() throws {
-        let expectation = expectation(description: "Activation error")
+        let expectation = expectation(description: #function)
 
         sut = AppStateStore(dataService: MockActivationFailedService(), alertService: mockAlertService)
         

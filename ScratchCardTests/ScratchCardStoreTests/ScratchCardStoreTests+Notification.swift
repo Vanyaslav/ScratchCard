@@ -17,17 +17,17 @@ class ScratchCardStoreTestsNotification: XCTestCase {
     override func setUp() {
         super.setUp()
         mockAlertService = MockNotification()
-        sut = AppStateStore(dataService: MockNegativeActivationService(), alertService: mockAlertService)
     }
         
     override func tearDown() {
         sut = nil
+        mockAlertService = nil
         cancellables.removeAll()
         super.tearDown()
     }
     
     func testNotificationRegistration() {
-        let expectation = expectation(description: "Notification registration")
+        let expectation = expectation(description: #function)
         mockAlertService.register
             .sink {
                 XCTAssert($0 is AppStateStore)
@@ -39,7 +39,8 @@ class ScratchCardStoreTestsNotification: XCTestCase {
     }
     
     func testTriggeredNotificationNegative() throws {
-        let expectation = expectation(description: "Notification triggering - negative response")
+        let expectation = expectation(description: #function)
+        sut = AppStateStore(dataService: MockNegativeActivationService(), alertService: mockAlertService)
         sut.simulateActivation(in: &cancellables)
         
         mockAlertService.showAlert
@@ -52,6 +53,21 @@ class ScratchCardStoreTestsNotification: XCTestCase {
                 expectation.fulfill()
             }
             .store(in: &cancellables)
+        
+        wait(for: [expectation], timeout: 3)
+    }
+    
+    func testTriggeredNotificationNetworkError() throws {
+        let expectation = expectation(description: #function)
+        sut = AppStateStore(dataService: MockActivationFailedService(), alertService: mockAlertService)
+        // when
+        sut.simulateActivation(in: &cancellables)
+        // then
+        mockAlertService.showAlert
+            .sink {
+                XCTAssertEqual($0, "The operation couldn’t be completed. (test error 111.)")
+                expectation.fulfill()
+            }.store(in: &cancellables)
         
         wait(for: [expectation], timeout: 3)
     }

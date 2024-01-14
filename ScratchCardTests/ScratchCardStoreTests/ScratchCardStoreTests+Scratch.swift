@@ -34,7 +34,7 @@ class ScratchCardStoreTestsScratch: XCTestCase {
     }
     
     func testCancelScratching() throws {
-        let expectation = expectation(description: "Cancel scratching")
+        let expectation = expectation(description: #function)
         sut.send.accept(.subscribeGenerateCode)
         sut.send.accept(.startGenerateCode)
         
@@ -60,7 +60,7 @@ class ScratchCardStoreTestsScratch: XCTestCase {
     }
     
     func testScratching() throws {
-        let expectation = expectation(description: "Scratch code")
+        let expectation = expectation(description: #function)
         sut.send.accept(.subscribeGenerateCode)
         sut.send.accept(.startGenerateCode)
         sut.$state
